@@ -1,0 +1,31 @@
+js_html5shiv:
+    filters: rjsmin
+    output: min/lib/html5shiv.js
+    contents:
+        - ../static-src/js/html5shiv/html5shiv.js
+
+js_lib:
+    filters: rjsmin
+    output: min/lib/lib.js
+    contents:
+        - ../static-src/js/lib/underscore-min.js
+        - ../static-src/js/lib/jquery-1.8.1.min.js
+        - ../static-src/js/lib/backbone-min.js
+        - ../static-src/js/lib/backbone-localstorage-min.js
+
+js_app:
+    filters: rjsmin
+    output: min/app.js
+    contents:
+        - ../static-src/js/app.js
+
+css_core:
+    filters: 
+        - sass
+        - cssmin
+    output: min/core.css
+    contents:
+         - ../static-src/sass/normalise.sass
+         - ../static-src/sass/skeleton.sass
+         - ../static-src/sass/font.sass
+         - ../static-src/sass/core.sass

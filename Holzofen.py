@@ -1,0 +1,2 @@
+import holzofen
+holzofen.run()

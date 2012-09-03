@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+%html lang="en"
+    %head
+        -block head
+            -include 'layout/head.haml'
+    %body
+        %header
+            -block header
+                -include 'layout/header.haml'
+        %div.container
+            -block content
+        -block js_body
+            %script
+                var lib = '{% assets "js_lib" %}{{ ASSET_URL }}{% endassets %}';
+                var app = '{% assets "js_app" %}{{ ASSET_URL }}{% endassets %}';
+                loadscript(lib, function() {
+                    loadscript(app);
+                });
+        %footer
+            -block footer
+                -include 'layout/footer.haml'
