@@ -2,22 +2,24 @@ js_html5shiv:
     filters: rjsmin
     output: min/lib/html5shiv.js
     contents:
-        - ../static-src/js/html5shiv/html5shiv.js
+        - ../static-src/js/lib/html5shiv.js
 
 js_lib:
-    filters: rjsmin
+    # filters: rjsmin
     output: min/lib/lib.js
     contents:
-        - ../static-src/js/lib/underscore-min.js
         - ../static-src/js/lib/jquery-1.8.1.min.js
-        - ../static-src/js/lib/backbone-min.js
+        - ../static-src/js/lib/underscore.js
+        - ../static-src/js/lib/backbone.js
         - ../static-src/js/lib/backbone-localstorage-min.js
 
 js_app:
-    filters: rjsmin
+    # filters: rjsmin
     output: min/app.js
     contents:
-        - ../static-src/js/app.js
+        - ../static-src/js/app/model/*.js
+        - ../static-src/js/app/view/*.js
+        - ../static-src/js/app/app.js
 
 css_core:
     filters: 

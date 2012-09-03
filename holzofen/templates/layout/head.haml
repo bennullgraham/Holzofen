@@ -1,9 +1,10 @@
 %meta charset="utf-8"
 -block css
-    {% assets "css_core" %}<link rel="stylesheet" href="{{ ASSET_URL }}">{% endassets %}
+    -assets "css_core"
+        %link rel="stylesheet" href="{{ ASSET_URL }}"
 -block js_head
     <!--[if lt IE 9]>
-        %script src="{{ url_for('static', filename='js/html5shiv.js') }}"
+        %script src="{% assets "js_html5shiv" %}{{ ASSET_URL }}{% endassets %}"
     <![endif]-->
 %script
     /* Steve Souders - http://www.stevesouders.com/blog/ */
