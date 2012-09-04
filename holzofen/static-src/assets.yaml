@@ -29,3 +29,5 @@ css_core:
          - sass/skeleton.sass
          - sass/font.sass
          - sass/core.sass
+         - sass/firing.sass
+         - sass/plot.sass

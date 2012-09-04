@@ -6,7 +6,7 @@ define(['./Firing'], function(Firing) {
         localStorage: new Store("firings-backbone"),
 
         comparator: function(firing) {
-            return firing.get('date');
+            return firing.get('title');
         }
 
     });

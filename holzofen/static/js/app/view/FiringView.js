@@ -1,15 +1,19 @@
-define(['app/template'], function(template){
+var rq = [
+];
+define(rq, function(){
+
     return Backbone.View.extend({
 
         tagName: "li",
+        className: "firing-list-item",
 
         events: {
-            'click'             : "edit",
+            'click'             : "view",
             'keypress .edit'    : "updateOnEnter",
             'blur .edit'        : "close"
         },
 
-        initialize: function() {
+        initialize: function(options) {
             this.model.bind('change', this.render, this);
             this.model.bind('destroy', this.remove, this);
         },
@@ -18,7 +22,6 @@ define(['app/template'], function(template){
             var self = this;
 
             self.$el.template('firing-view', self.model.toJSON(), function(){
-                self.$el.addClass('firing-list-item');
                 self.input = self.$('.edit');
                 self.input.bind('blur', self.close());
             });
@@ -27,17 +30,16 @@ define(['app/template'], function(template){
         },
 
         setContent: function() {
-            //this.$('.data').html(this.model.get('data'));
         },
 
-        edit: function() {
-            $(this.el).addClass('editing');
-            this.input.focus();
+        view: function() {
+            $(this.el).addClass('active');
+            //$('#content-pane').append(this.plot.render().el);
         },
 
         close: function() {
             this.model.save({data: this.input.val()});
-            $(this.el).removeClass('editing');
+            $(this.el).removeClass('active');
         },
 
         clear: function() {
