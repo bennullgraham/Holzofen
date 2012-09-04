@@ -1,21 +1,39 @@
+$bg:        rgb(230, 215, 205)
+
+html
+    height: 100%
+
+body
+    padding: 150px
+    background-image: -webkit-radial-gradient(175px 175px, 75% 75%, rgb(255, 255, 255), $bg)
+    background-color: $bg
+    background-repeat: no-repeat
+
 h1
     font-family: 'Headland One', serif
     font-size: 40px
     color: #3a3b39
     vertical-align: middle
+    margin: 0
+    padding: 0
     &:first-letter 
         font-size: 48px
         vertical-align: middle
-        background-color: white
     span 
         color: #8e9186
 
 
 input 
-    padding: 5px
+    padding: 10px
     border: 1px solid #b8b09e
     font-size: 16px
+    width: 175px
 
 
-.template 
-    display: none
+#firing-list
+    li
+        input
+            display: none
+        &.editing
+            input
+                display: inline-block

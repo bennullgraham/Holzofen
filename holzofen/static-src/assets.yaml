@@ -1,33 +1,31 @@
 js_html5shiv:
     filters: rjsmin
-    output: min/lib/html5shiv.js
+    output: ../static/js/lib/shiv.js
     contents:
-        - ../static-src/js/lib/html5shiv.js
+        - js/lib/html5shiv.js
+
+js_require:
+    # filters: rjsmin
+    output: ../static/js/lib/require.js
+    contents:
+        - js/lib/require.js
 
 js_lib:
     # filters: rjsmin
-    output: min/lib/lib.js
+    output: ../static/js/lib/lib.js
     contents:
-        - ../static-src/js/lib/jquery-1.8.1.min.js
-        - ../static-src/js/lib/underscore.js
-        - ../static-src/js/lib/backbone.js
-        - ../static-src/js/lib/backbone-localstorage-min.js
-
-js_app:
-    # filters: rjsmin
-    output: min/app.js
-    contents:
-        - ../static-src/js/app/model/*.js
-        - ../static-src/js/app/view/*.js
-        - ../static-src/js/app/app.js
+        - js/lib/jquery-1.8.1.min.js
+        - js/lib/underscore.js
+        - js/lib/backbone.js
+        - js/lib/backbone-localstorage-min.js
 
 css_core:
     filters: 
         - sass
         - cssmin
-    output: min/core.css
+    output: ../static/css/core.css
     contents:
-         - ../static-src/sass/normalise.sass
-         - ../static-src/sass/skeleton.sass
-         - ../static-src/sass/font.sass
-         - ../static-src/sass/core.sass
+         - sass/normalise.sass
+         - sass/skeleton.sass
+         - sass/font.sass
+         - sass/core.sass

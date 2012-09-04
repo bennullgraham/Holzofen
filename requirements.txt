@@ -2,4 +2,6 @@ Flask>=0.9
 Flask-Assets>=0.7
 PyYAML>=3.10
 Hamlish-Jinja
-cssmin
+icssmin
+
+# npm dusty

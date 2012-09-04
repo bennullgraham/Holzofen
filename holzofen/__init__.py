@@ -2,6 +2,8 @@ import os
 from flask import Flask, render_template
 from hamlish_jinja import HamlishExtension
 
+# figure out which directory we're in
+here, f = os.path.split(os.path.abspath(__file__))
 
 app = Flask(__name__)
 # app.config.from_object('default-config')
@@ -16,10 +18,10 @@ from flask.ext.assets import Environment
 assets = Environment(app)
 assets.versions = 'hash'
 assets.url = '/static'
+assets.directory = '%s/static-src' % here
 
 # load asset bundles
 from webassets.loaders import YAMLLoader
-here, f = os.path.split(os.path.abspath(__file__))
 bundles = YAMLLoader("%s/static-src/assets.yaml" % here).load_bundles()
 [assets.register(name, bundle) for name, bundle in bundles.iteritems()]
 
@@ -32,6 +34,11 @@ def not_found(error):
 @app.route('/')
 def index():
     return render_template('index.haml')
+
+
+@app.route('/template/<string:template>')
+def template(template):
+    return render_template('template/%s.haml' % template)
 
 
 def run():
