@@ -18,6 +18,7 @@ define(['app/template'], function(template){
             var self = this;
 
             self.$el.template('firing-view', self.model.toJSON(), function(){
+                self.$el.addClass('firing-list-item');
                 self.input = self.$('.edit');
                 self.input.bind('blur', self.close());
             });

@@ -1,15 +1,30 @@
-$bg:        rgb(230, 215, 205)
+$planck:            18px
+
+$bg:                rgb(230, 215, 205)
+
+$leftpanel-width:   $planck * 15
+
+$header-height:     $planck * 5
+
+
 
 html
     height: 100%
 
 body
-    padding: 150px
-    background-image: -webkit-radial-gradient(175px 175px, 75% 75%, rgb(255, 255, 255), $bg)
-    background-color: $bg
+    padding: 0 0 0 $leftpanel-width
+    ffbackground-image: -webkit-radial-gradient(175px 175px, 75% 75%, rgb(255, 255, 255), $bg)
+    ffbackground-color: $bg
     background-repeat: no-repeat
 
 h1
+    position: absolute
+    top: 0
+    left: 0
+    text-align: center
+    line-height: $header-height
+    height: $header-height
+    width: $leftpanel-width
     font-family: 'Headland One', serif
     font-size: 40px
     color: #3a3b39
@@ -31,9 +46,31 @@ input
 
 
 #firing-list
-    li
+    margin: 0
+    padding: 0
+    position: absolute
+    top: $header-height
+    left: 0
+    bottom: 0
+    width: $leftpanel-width
+    background: -webkit-radial-gradient(black 15%, transparent 16%) 0 0, -webkit-radial-gradient(black 15%, transparent 16%) 8px 8px, -webkit-radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 0 1px, -webkit-radial-gradient(rgba(255,255,255,.1) 15%, transparent 20%) 8px 9px
+    background-color: rgb(40,40,40)
+    background-size: 16px 16px
+
+.firing-list-item
+    color: #ddd
+    background-color: rgb(50,50,50)
+    background-image: -webkit-linear-gradient(rgba(255,255,255,0.05) 50%, transparent 50%)
+    background-size: 20px 100%
+    border-top:    1px solid rgba(255,255,255,0.2)
+    border-bottom: 1px solid rgba(0,0,0,1)
+    padding: 10px
+    input
+        display: none
+    &.editing
         input
-            display: none
-        &.editing
-            input
-                display: inline-block
+            display: inline-block
+    .title
+        color: #eee
+        font-weight: bold
+
