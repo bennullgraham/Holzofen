@@ -19,7 +19,7 @@ define(['lib/underscore', 'lib/jquery'], function() {
 		if (!template) return false;
 		data = data || {};
 		callback = callback || function(){};
-		console.dir({'el':element, 'template':template, 'data':data, 'cb':callback});
+		
 		element.html(_.template(template, data));
 		callback();
 	}

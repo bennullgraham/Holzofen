@@ -32,7 +32,6 @@ define(rq, function(FiringCollection, FiringView) {
 
         addOne: function (firing) {
             var view = new FiringView({model: firing});
-            console.log('going to append rendered firing view');
             this.$('#firing-list').append(view.render().el);
         },
 
