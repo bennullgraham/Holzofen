@@ -1,5 +1,12 @@
 @import "constants"
 
+$item-height:           $planck * 3
+$item-padding-v:        $planck / 2
+$item-padding-h:        $planck / 2
+
+$item-bg-light:         #3a3a3a
+$item-bg-dark:          #313131
+
 #firing-list
     margin: 0
     padding: 0
@@ -16,20 +23,27 @@
     position: relative
     cursor: pointer
     color: #ddd
-    background-color: rgb(50,50,50)
-    background-image: -webkit-linear-gradient(rgba(255,255,255,0.05) 50%, transparent 50%)
+    background-image: -webkit-linear-gradient($item-bg-light 50%, $item-bg-dark 50%)
     background-size: 100% 100%
     border-top:    1px solid rgba(255,255,255,0.2)
     border-bottom: 1px solid rgba(0,0,0,1)
-    padding: 10px
-    height: 40px
-    &:last-child
-        box-shadow: 0 2px 10px rgba(0,0,0,0.5)
-    input
-        display: none
-    width: $leftpanel-width - (2 * 10px) - $planck
+    padding: $item-padding-v $item-padding-h
+    height: $item-height - ($item-padding-v * 2)
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.5)
+    font-size: 14px
+
+    -webkit-transition: width 0.2s
+    width: $leftpanel-width - (2 * $item-padding-h) - $planck
     &.active
-        width: $leftpanel-width - (2 * 10px)
+        -webkit-transition: width 0.2s
+        width: $leftpanel-width - (2 * $item-padding-h)
+    &:hover
+        background-image: -webkit-linear-gradient(lighten($item-bg-light, 10%) 50%, lighten($item-bg-dark, 10%) 50%)
+        &:after
+            border-color: transparent transparent transparent lighten($item-bg-light, 10%)
+        &:before
+            border-color: transparent transparent transparent lighten($item-bg-dark, 10%)
+
     &:after
         position: absolute
         left: 100%
@@ -40,7 +54,7 @@
         height: 0
         border-style: solid
         border-width: 30px 0 0 10px
-        border-color: transparent transparent transparent #3a3a3a
+        border-color: transparent transparent transparent $item-bg-light
     &:before
         position: absolute
         left: 100%
@@ -51,7 +65,7 @@
         height: 0
         border-style: solid
         border-width: 0 0 30px 10px
-        border-color: transparent transparent transparent #313131
+        border-color: transparent transparent transparent $item-bg-dark
 
     .title
         color: #eee
