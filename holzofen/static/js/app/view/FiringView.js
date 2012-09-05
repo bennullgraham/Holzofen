@@ -1,6 +1,7 @@
 var rq = [
+    'app/view/PlotView'
 ];
-define(rq, function(){
+define(rq, function(PlotView){
 
     return Backbone.View.extend({
 
@@ -19,6 +20,8 @@ define(rq, function(){
             self.model.bind('change', self.render, self);
             self.model.bind('destroy', self.remove, self);
 
+            self.PlotView = new PlotView({model: self.model});
+
             Application.EventBus.on('firing:view', function(id) {
                 if (id!==self.model.id)
                     self.close();
@@ -27,27 +30,23 @@ define(rq, function(){
 
         render: function() {
             var self = this;
-
-            self.$el.template('firing-view', self.model.toJSON(), function(){
-                self.input = self.$('.edit');
-                self.input.bind('blur', self.close());
+            data = self.model.toJSON();
+            data['created_date'] = new Date(data['created']).toDateString();
+            self.$el.template('firing-view', data, function(){
+                // self.input = self.$('.edit');
+                // self.input.bind('blur', self.close());
             });
-            self.setContent();
             return self;
         },
 
-        setContent: function() {
-        },
-
         view: function() {
-            var self = this;
-            Application.EventBus.trigger('firing:view', self.model.id);
-            $(self.el).addClass('active');
-            //$('#content-pane').append(this.plot.render().el);
+            Application.EventBus.trigger('firing:view', this.model.id);
+            this.PlotView.view();
+            $(this.el).addClass('active');
         },
 
         close: function() {
-            this.model.save({data: this.input.val()});
+            this.PlotView.close();
             $(this.el).removeClass('active');
         },
 

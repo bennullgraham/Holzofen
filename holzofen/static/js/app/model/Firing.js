@@ -1,4 +1,7 @@
-define(function(){
+rq = [
+    // 'plot_data'
+];
+define(function(PlotData){
     return Backbone.Model.extend({
 
         defaults: {
@@ -11,22 +14,23 @@ define(function(){
             if (!this.get("title")) {
                 this.set({"title": this.defaults.title});
             }
-            if (!this.get("data")) {
-                this.set({"data": this.defaults.data});
+            if (!this.get("plot_data")) {
+                this.set({"plot_data": this.defaults.plot_data});
             }
             if (!this.get("created")) {
                 this.set({"created": this.defaults.created});
             }
-            //[ [[0, 0], [1, 1]] ];
+            var x = 0;
+            var y = 0;
             this.set({
-                'data': [[
-                    [0.0,0.0],
-                    [0.1,0.5],
-                    [0.2,1.0],
-                    [0.4,1.5],
-                    [0.8,2.0],
-                    [1.6,2.5],
-                    [3.2,3.0]
+                'plot_data': [[
+                    [x+=Math.random(),y+=Math.random()],
+                    [x+=Math.random(),y+=Math.random()],
+                    [x+=Math.random(),y+=Math.random()],
+                    [x+=Math.random(),y+=Math.random()],
+                    [x+=Math.random(),y+=Math.random()],
+                    [x+=Math.random(),y+=Math.random()],
+                    [x+=Math.random(),y+=Math.random()]
                 ]]
             });
         },
@@ -36,7 +40,7 @@ define(function(){
         },
 
         dataPoints: function() {
-            return count(this.get('data'));
+            return count(this.get('plot_data'));
         }
 
     });

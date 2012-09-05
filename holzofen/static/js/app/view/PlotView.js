@@ -4,36 +4,36 @@ rq = [
 define(rq, function(){
     return Backbone.View.extend({
 
-        tagName: "div",
+        tagName: 'div',
+        className: 'plot-view',
 
-        render: function() {
+        render: function(callback) {
             var self = this;
 
-  //          console.dir(self.model);
-
-            self.$el.template('plot-view', {}, function(){
-                var plot = self.$el.find('.plot');
-                var data = self.model.get('data');
-/*                var data = [[
-                    [0.00,0.00],
-                    [0.05,0.25],
-                    [0.10,0.50],
-                    [0.20,0.75],
-                    [0.40,1.00],
-                    [0.80,1.25],
-                    [1.60,1.50],
-                    [2.00,1.75],
-                    [3.40,2.00],
-                    [4.00,2.25]
-                ]];*/
-//                console.dir({'plotting': data});
-                $.plot(plot, data, { yaxis: { max: 3 } });
+            $(self.el).template('plot-view', {}, function(){
+                callback();
             });
-            return this;
+            return self;
         },
 
         initialize: function() {
-            this.model.bind('change', this.render, this);
+            // var self = this;
+            // self.model.bind('change', self.render, self);
+        },
+
+        view: function() {
+            //console.dir('viewing plot ' + this.model.id);
+            var self = this;
+            self.render(function() {
+                $('#content-pane').append(self.el);
+                var options = {};
+                var data = self.model.toJSON();
+                self.plot = $.plot($(self.el), data['plot_data'], options);
+            });
+        },
+
+        close: function() {
+            $(this.el).remove();
         }
 
     });

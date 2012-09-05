@@ -25,9 +25,12 @@ css_core:
         - cssmin
     output: ../static/css/core.css
     contents:
+        # core
          - sass/normalise.sass
          - sass/skeleton.sass
          - sass/font.sass
          - sass/core.sass
+         - sass/button.sass
+        # application      
          - sass/firing.sass
          - sass/plot.sass

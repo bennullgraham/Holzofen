@@ -1,10 +1,9 @@
 rq = [
     'app/model/FiringCollection',
     'app/view/FiringView',
-    'app/view/PlotView',
     'app/template'
 ];
-define(rq, function(FiringCollection, FiringView, PlotView) {
+define(rq, function(FiringCollection, FiringView, empty) {
 
     var Firings = new FiringCollection;
 
@@ -43,10 +42,8 @@ define(rq, function(FiringCollection, FiringView, PlotView) {
         },
 
         addOne: function (firing) {
-            var plot = new PlotView({model: firing});
             var view = new FiringView({model: firing});
             this.$('#firing-list').append(view.render().el);
-            this.$('#content-pane').append(plot.render().el);
         },
 
         addAll: function () {
