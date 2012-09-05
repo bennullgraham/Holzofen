@@ -14,8 +14,15 @@ define(rq, function(){
         },
 
         initialize: function(options) {
-            this.model.bind('change', this.render, this);
-            this.model.bind('destroy', this.remove, this);
+            var self = this;
+
+            self.model.bind('change', self.render, self);
+            self.model.bind('destroy', self.remove, self);
+
+            Application.EventBus.on('firing:view', function(id) {
+                if (id!==self.model.id)
+                    self.close();
+            });
         },
 
         render: function() {
@@ -33,7 +40,9 @@ define(rq, function(){
         },
 
         view: function() {
-            $(this.el).addClass('active');
+            var self = this;
+            Application.EventBus.trigger('firing:view', self.model.id);
+            $(self.el).addClass('active');
             //$('#content-pane').append(this.plot.render().el);
         },
 

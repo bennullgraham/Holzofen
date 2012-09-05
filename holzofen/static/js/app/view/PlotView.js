@@ -9,7 +9,7 @@ define(rq, function(){
         render: function() {
             var self = this;
 
-            console.dir(self.model);
+  //          console.dir(self.model);
 
             self.$el.template('plot-view', {}, function(){
                 var plot = self.$el.find('.plot');
@@ -26,7 +26,7 @@ define(rq, function(){
                     [3.40,2.00],
                     [4.00,2.25]
                 ]];*/
-                console.dir({'plotting': data});
+//                console.dir({'plotting': data});
                 $.plot(plot, data, { yaxis: { max: 3 } });
             });
             return this;

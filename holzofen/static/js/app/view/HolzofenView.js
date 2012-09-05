@@ -18,6 +18,9 @@ define(rq, function(FiringCollection, FiringView, PlotView) {
 
         initialize: function() {
             var self = this;
+
+            self.createEventBus(self);
+
             $(this.el).template('holzofen-app', {}, function() {
                 self.input = self.$("#new-firing");
                 Firings.bind('add', self.addOne, self);
@@ -26,6 +29,14 @@ define(rq, function(FiringCollection, FiringView, PlotView) {
                 Firings.fetch();
             });
         },
+
+
+        createEventBus: function(self) {
+            self.EventBus = {};
+            _.extend(self.EventBus, Backbone.Events);
+            window.Application = self;
+        },
+
 
         render: function() {
             // ...
