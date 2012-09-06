@@ -3,7 +3,7 @@ define(['./Firing'], function(Firing) {
 
         model: Firing,
 
-        url: '/api/firings',
+        url: '/api/1.0/firings',
         
         comparator: function(firing) {
             return firing.get('title');

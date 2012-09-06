@@ -9,7 +9,7 @@ app = Flask(__name__)
 app.url_map.converters['ObjectId'] = BSONObjectIdConverter
 
 app.register_blueprint(static.static, url_prefix='/static')
-app.register_blueprint(api.api, url_prefix='/api')
+app.register_blueprint(api.api, url_prefix='/api/1.0/')
 app.register_blueprint(content.content)
 
 static.init_app(app)
