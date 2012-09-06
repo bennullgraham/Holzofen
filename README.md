@@ -6,7 +6,7 @@ Use git to clone this repository
 Requirements
 ----------
 
-You will need Python 2.7 and (pip)[http://guide.python-distribute.org/installation.html#pip-installs-python-pip]. At the time of writing, the latest pip could be installed by:
+You will need Python 2.7 and [pip](http://guide.python-distribute.org/installation.html#pip-installs-python-pip). At the time of writing, the latest pip could be installed by:
 
 ````
 $ wget http://pypi.python.org/packages/source/p/pip/pip-0.7.2.tar.gz
