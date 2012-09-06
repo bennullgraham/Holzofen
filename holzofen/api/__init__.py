@@ -1,18 +1,22 @@
 from flask import Blueprint
-from holzofen.api.util import jsonify
+from flask.ext.pymongo import PyMongo
+from holzofen.api import util
 
 api = Blueprint('api', __name__)
+mongo = PyMongo()
 
 
 def init_app(app):
-    pass
+    mongo.init_app(app)
 
 
-@api.route('/firings', methods=['GET'])
-@jsonify
+@api.route('/firing/<ObjectId:firing_id>/', methods=['GET'])
+@util.jsonify
+def firing_view(firing_id):
+    return mongo.db.firings.find_one({'_id': firing_id})
+
+
+@api.route('/firings/', methods=['GET'])
+@util.jsonify
 def firings():
-    return {
-        1: "15kj24598bxz",
-        2: "bcsbscv76scvgh",
-        3: "khfshgdf79sdfh"
-    }
+    return util.to_dict(mongo.db.firings.find(fields='_id'))
