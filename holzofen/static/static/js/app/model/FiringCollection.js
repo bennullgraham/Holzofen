@@ -3,8 +3,8 @@ define(['./Firing'], function(Firing) {
 
         model: Firing,
 
-        localStorage: new Store("firings-backbone"),
-
+        url: '/api/firings',
+        
         comparator: function(firing) {
             return firing.get('title');
         }

@@ -20,7 +20,7 @@ define(function(PlotData){
             if (!this.get("created")) {
                 this.set({"created": this.defaults.created});
             }
-            var x = 0;
+            /*var x = 0;
             var y = 0;
             this.set({
                 'plot_data': [[
@@ -32,7 +32,7 @@ define(function(PlotData){
                     [x+=Math.random(),y+=Math.random()],
                     [x+=Math.random(),y+=Math.random()]
                 ]]
-            });
+            });*/
         },
 
         remove: function() {

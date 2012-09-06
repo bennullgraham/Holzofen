@@ -30,12 +30,14 @@ define(rq, function(PlotView){
 
         render: function() {
             var self = this;
-            data = self.model.toJSON();
-            data['created_date'] = new Date(data['created']).toDateString();
-            self.$el.template('firing-view', data, function(){
-                // self.input = self.$('.edit');
-                // self.input.bind('blur', self.close());
-            });
+            // data = self.model.toJSON();
+            // data['created_date'] = new Date(data['created']).toDateString();
+            var data = {
+                created_date: new Date('2011-01-01 01:23').toDateString(),
+                title: 'Empty Firing'
+            };
+            
+            self.$el.template('firing-view', data, function(){});
             return self;
         },
 

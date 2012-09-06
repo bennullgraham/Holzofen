@@ -10,7 +10,7 @@ def init_app(app):
     mongo.init_app(app)
 
 
-@api.route('/firing/<ObjectId:firing_id>/', methods=['GET'])
+@api.route('/firings/<ObjectId:firing_id>/', methods=['GET'])
 @util.jsonify
 def firing_view(firing_id):
     return mongo.db.firings.find_one({'_id': firing_id})
