@@ -1,18 +1,18 @@
 js_html5shiv:
     filters: rjsmin
-    output: ../static/js/lib/shiv.js
+    output: ../js/lib/shiv.js
     contents:
         - js/lib/html5shiv.js
 
 js_require:
     # filters: rjsmin
-    output: ../static/js/lib/require.js
+    output: ../js/lib/require.js
     contents:
         - js/lib/require.js
 
 js_lib:
     # filters: rjsmin
-    output: ../static/js/lib/lib.js
+    output: ../js/lib/lib.js
     contents:
         - js/lib/jquery-1.8.1.min.js
         - js/lib/underscore.js
@@ -23,7 +23,7 @@ css_core:
     filters: 
         - sass
         - cssmin
-    output: ../static/css/core.css
+    output: ../css/core.css
     contents:
         # core
          - sass/normalise.sass

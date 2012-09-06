@@ -1,7 +1,6 @@
 from flask import Flask
 from flask.ext.pymongo import BSONObjectIdConverter
-from holzofen import static
-from holzofen import api
+from holzofen import static, api, content
 
 
 app = Flask(__name__)
@@ -9,11 +8,13 @@ app = Flask(__name__)
 # hax
 app.url_map.converters['ObjectId'] = BSONObjectIdConverter
 
-app.register_blueprint(static.static)
+app.register_blueprint(static.static, url_prefix='/static')
 app.register_blueprint(api.api, url_prefix='/api')
+app.register_blueprint(content.content)
 
 static.init_app(app)
 api.init_app(app)
+content.init_app(app)
 
 
 def run():
