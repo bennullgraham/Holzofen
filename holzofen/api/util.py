@@ -10,3 +10,12 @@ def jsonify(f):
         j = json.dumps(f(*args, **kwargs), default=json_util.default)
         return Response(j, mimetype='application/json')
     return inner
+
+
+def to_dict(cursor):
+    data = []
+    for f in cursor:
+        f['id'] = str(f['_id'])
+        del f['_id']
+        data.append(f)
+    return data
