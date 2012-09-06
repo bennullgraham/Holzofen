@@ -8,7 +8,6 @@ mongo = PyMongo()
 
 def init_app(app):
     mongo.init_app(app)
-    print app.url_map
 
 
 @api.route('/firing/<ObjectId:firing_id>/', methods=['GET'])
