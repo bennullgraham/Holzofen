@@ -29,6 +29,6 @@ def index():
     return render_template('index.haml')
 
 
-@static.route('/<path:template>')
+@static.route('/template/<string:template>')
 def template(template):
-    return render_template('/%s.haml' % template)
+    return render_template('/template/%s.haml' % template)

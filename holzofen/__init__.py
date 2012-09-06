@@ -1,14 +1,14 @@
 from flask import Flask
 from holzofen import static
-# from holzofen import api
+from holzofen import api
 
 
 app = Flask(__name__)
 app.register_blueprint(static.static)
-# app.register_blueprint(api.api)
+app.register_blueprint(api.api, url_prefix='/api')
 
 static.init_app(app)
-# api.init_app(app)
+api.init_app(app)
 
 
 def run():
