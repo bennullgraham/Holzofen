@@ -32,8 +32,8 @@ An arbitrary but constant number of columns of data until EOF. Columns should be
 Example
 ==========
     Date: 2012 09 06 19 46 34
-    Fields: Brick Temperature, Oven Temperature
+    Fields: Brick Temperature, Oven Temperature, Chimney Temperature
     
-    0	20.0	40.0
-    15	22.1	45.8
-    30	24.4	53.1
+    0	20.0	40.0	31.3
+    15	22.1	45.8	40.8
+    30	24.4	53.1	49.7
