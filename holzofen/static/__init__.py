@@ -5,7 +5,7 @@ from hamlish_jinja import HamlishExtension
 from flask.ext.assets import Environment
 from webassets.loaders import YAMLLoader
 
-static = Blueprint('static', __name__, template_folder='templates')  # static_folder=''
+static = Blueprint('static', __name__, template_folder='templates')
 
 
 def init_app(app):
@@ -16,7 +16,7 @@ def init_app(app):
     # configure assets
     assets = Environment(app)
     assets.versions = 'hash'
-    assets.url = '/static'
+    assets.url = '/static/static'
     assets.directory = '%s/static-src' % here
 
     # load asset bundles
@@ -24,7 +24,11 @@ def init_app(app):
     [assets.register(name, bundle) for name, bundle in bundles.iteritems()]
 
 
-@static.route('/', defaults={'template': 'index'})
-@static.route('/template/<string:template>')
+@static.route('/')
+def index():
+    return render_template('index.haml')
+
+
+@static.route('/<path:template>')
 def template(template):
-    return render_template('/templates/template/%s.haml' % template)
+    return render_template('/%s.haml' % template)
