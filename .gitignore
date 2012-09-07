@@ -1,4 +1,4 @@
 *.pyc
 holzofen/static/src/.webassets-cache/
-holzofen/static/css/
+holzofen/static/css/core.css
 local-config.py

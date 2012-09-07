@@ -7,16 +7,40 @@ $item-padding-h:        $planck / 2
 $item-bg-light:         rgb(245,245,245)
 $item-bg-dark:          rgb(235,235,235)
 
-#firing-list
-    list-style: none
-    margin: 0 $planck
-    padding: 0
+$item-bg-light-on:      lighten($fg-title, 5%)
+$item-bg-dark-on:       darken($fg-title, 5%)
+
+$item-bg-light-hov:     #559eba
+$item-bg-dark-hov:      #3e829e
+
+#firings
     position: absolute
     top: $header-height
     left: 0
     bottom: 0
     width: $leftpanel-width
-    background-size: 16px 16px
+
+#firing-util
+    font-size: 80%
+    list-style: none
+    margin: ($planck / 2) $planck
+    padding: 0
+    li
+        margin: 0
+        padding: 0
+        display: inline-block
+        &:before
+            color: lighten($fg-body, 50%)
+            content: "|"
+            margin: ($planck / 2)
+        &:first-child:before
+            content: ""
+
+
+#firing-list
+    list-style: none
+    margin: 0 $planck
+    padding: 0
 
 .firing-list-item
     position: relative
@@ -33,17 +57,21 @@ $item-bg-dark:          rgb(235,235,235)
     padding: $item-padding-v $item-padding-h
     width: $leftpanel-width - (2 * $item-padding-h) - $planck - 2px /* border */
     height: $item-height - ($item-padding-v * 2) - 4px /* border + margin */
-    ffbox-shadow: 2px 2px 20px rgba(0,0,0,0.5)
+    box-shadow: 1px 1px 20px rgba(0,0,0,0.2)
     font-size: 14px
+    text-shadow: 0 1px 1px white
+    overflow: hidden
 
     -webkit-transition: height 0.2s
+    &:hover
+        text-shadow: 0 -1px -1px rgba(0,0,0,0.5)
+        background-image: -webkit-linear-gradient($item-bg-light-hov 20%, $item-bg-dark-hov 80%)
+        color: #fff
     &.active
+        text-shadow: 0 -1px -1px rgba(0,0,0,0.5)
         -webkit-transition: height 0.2s
         height: $item-height + ($planck * 2) - ($item-padding-v * 2) - 2px /* border */
-        background-image: -webkit-linear-gradient(lighten($fg-title, 5%) 20%, darken($fg-title, 5%) 80%)
-        color: #fff
-    &:hover
-        background-image: -webkit-linear-gradient(lighten($fg-title, 5%) 20%, darken($fg-title, 5%) 80%)
+        background-image: -webkit-linear-gradient($item-bg-light-on 20%, $item-bg-dark-on 80%)
         color: #fff
 
     .created
