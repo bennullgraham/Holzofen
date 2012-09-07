@@ -1,11 +1,6 @@
+import re
+import time
 from datetime import datetime
-
-example = """Date: 2012 09 06 19 46 34
-Fields: Brick Temperature, Oven Temperature
-
-0   20.0    40.0
-15  22.1    45.8
-30  24.4    53.1"""
 
 
 class Parser(object):
@@ -21,18 +16,37 @@ class Parser(object):
     def parse(self, str):
         for line in str.split("\n"):
             self.parse_function(line)
+        return self.plot_data
 
     def __parse_meta(self, line):
-        allowed_fields = {
-            'required': ['Fields'],
-            'optional': ['Date'],
+        field_parser = {
+            'Date': self.__parse_meta_date,
+            'Fields': self.__parse_meta_fields,
         }
-        field, data = line.split(':', 1)
-        if field in allowed_fields['required'] or field in allowed_fields['optional']:
-            if field == 'Date':
-                y, m, d, h, m, s = data.split(' ')
-                self.meta['date'] = datetime.datetime(y, m, d, h, m, s)
+        # check for separator
+        if re.match('^\s*$', line):
+            self.parse_function = self.__parse_data
+        else:
+            tokens = line.split(':', 1)
+            if len(tokens) == 2:
+                field, data = [t.strip() for t in tokens]
+                if field in field_parser.keys():
+                    field_parser[field](field, data)
 
+    def __parse_meta_date(self, field, data):
+        y, mo, d, h, mi, s = [int(t) for t in data.split(' ')]
+        dt = datetime(y, mo, d, h, mi, s)
+        self.meta['date'] = time.mktime(dt.timetuple())  # POSIX time
 
+    def __parse_meta_fields(self, field, data):
+        fields = [f.strip() for f in data.split(',')]
+        self.plot_data = [{'label': f, 'data': []} for f in fields]
 
-print Parser().parse(example)
+    def __parse_data(self, line):
+        time = self.meta['date']
+        offset, data = line.split(self.FIELD_SEPARATOR, 1)
+        time += int(offset)
+        col = 0
+        for temperature in [float(d) for d in data.split(self.FIELD_SEPARATOR)]:
+            self.plot_data[col]['data'].append([time, temperature])
+            col += 1
