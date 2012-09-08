@@ -28,10 +28,7 @@ def firing_add():
     firing_ids = []
     for key, file in request.files.iteritems():
         p = log_parser.Parser()
-        firing = {
-            'data': p.parse(file),
-            'data-source': 'log'
-        }
+        firing = p.parse(file)
         oid = mongo.db.firings.insert(firing)
         firing_ids.append(str(oid))
     return firing_ids

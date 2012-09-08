@@ -10,14 +10,19 @@ class Parser(object):
     def __init__(self):
         self.plot_data = {}
         self.meta = {}
-        self.meta['date'] = datetime.now()
+        self.meta['date'] = datetime.utcnow()
         self.parse_function = self.__parse_meta
         self.fields = []
 
     def parse(self, file):
         for line in file.readlines():
             self.parse_function(line)
-        return self.plot_data.values()
+        return {
+            'data': self.plot_data.values(),
+            'data-source': 'log',
+            'data-date': self.meta['date'],
+            'data-fields': self.fields,
+        }
 
     def __parse_meta(self, line):
         field_parser = {
