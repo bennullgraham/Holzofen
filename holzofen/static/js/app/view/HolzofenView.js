@@ -1,7 +1,8 @@
 rq = [
     'app/model/FiringCollection',
     'app/view/FiringView',
-    'app/template'
+    'app/template',
+    'lib/plupload',
 ];
 define(rq, function(FiringCollection, FiringView, empty) {
 
@@ -12,13 +13,19 @@ define(rq, function(FiringCollection, FiringView, empty) {
         el: $('#HolzofenApp'),
         
         events: {
-            'keypress #new-firing'        : 'createOnEnter'
+            'keypress #new-firing'                  : 'createOnEnter',
+            'click #firing-util .import'            : 'showUpload',
+            'click #plupload-container .upload'     : 'hideUpload'
         },
 
         initialize: function() {
             var self = this;
 
             self.createEventBus(self);
+
+            self.EventBus.on('firing:uploaded', function(id) {
+                Firings.create({'id': id});
+            });
 
             $(this.el).template('holzofen-app', {}, function() {
                 self.input = self.$("#new-firing");
@@ -56,6 +63,17 @@ define(rq, function(FiringCollection, FiringView, empty) {
 
             Firings.create({data: this.input.val()});
             this.input.val('');
+        },
+
+        showUpload: function() {
+            var self = this;
+            self.$('#import-container').template('uploader', {}, function() {
+                self.$('#import-container').addClass('active');
+            });
+        },
+
+        hideUpload: function() {
+            this.$('#import-container').empty();
         }
 
     });

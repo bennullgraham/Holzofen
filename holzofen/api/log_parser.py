@@ -12,11 +12,12 @@ class Parser(object):
         self.meta = {}
         self.meta['date'] = datetime.now()
         self.parse_function = self.__parse_meta
+        self.fields = []
 
-    def parse(self, str):
-        for line in str.split("\n"):
+    def parse(self, file):
+        for line in file.readlines():
             self.parse_function(line)
-        return self.plot_data
+        return self.plot_data.values()
 
     def __parse_meta(self, line):
         field_parser = {
@@ -36,17 +37,18 @@ class Parser(object):
     def __parse_meta_date(self, field, data):
         y, mo, d, h, mi, s = [int(t) for t in data.split(' ')]
         dt = datetime(y, mo, d, h, mi, s)
-        self.meta['date'] = time.mktime(dt.timetuple())  # POSIX time
+        self.meta['date'] = time.mktime(dt.timetuple()) * 1000  # Javascript timestamp (POSIX, but in milliseconds)
 
     def __parse_meta_fields(self, field, data):
-        fields = [f.strip() for f in data.split(',')]
-        self.plot_data = [{'label': f, 'data': []} for f in fields]
+        self.fields = [f.strip() for f in data.split(',')]
+        self.plot_data = dict([(f, {'label': f, 'data': []}) for f in self.fields])
 
     def __parse_data(self, line):
         time = self.meta['date']
         offset, data = line.split(self.FIELD_SEPARATOR, 1)
-        time += int(offset)
+        time += (int(offset) * 1000)
         col = 0
         for temperature in [float(d) for d in data.split(self.FIELD_SEPARATOR)]:
-            self.plot_data[col]['data'].append([time, temperature])
+            field = self.fields[col]
+            self.plot_data[field]['data'].append([time, temperature])
             col += 1

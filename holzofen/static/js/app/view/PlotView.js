@@ -1,5 +1,6 @@
 rq = [
-    'lib/jquery.flot'
+    'lib/jquery.flot',
+    'lib/jquery.flot.time'
 ];
 define(rq, function(){
     return Backbone.View.extend({
@@ -23,12 +24,20 @@ define(rq, function(){
             var self = this;
             self.model.fetch({
                 success: function(){
-                    console.dir(self.model);
                     self.render(function() {
                         $('#content-pane').append(self.el);
-                        var options = {};
+                        var options = {
+                            xaxis: {
+                                mode: "time",
+                                timeformat: "%a %H:%M",
+                            },
+                            grid: {
+                                borderWidth: 1,
+                                borderColor: 0
+                            }
+                        };
                         var data = self.model.toJSON();
-                        self.plot = $.plot($(self.el), data['plot_data'], options);
+                        self.plot = $.plot($(self.el), data['data'], options);
                     });
                 }
             });

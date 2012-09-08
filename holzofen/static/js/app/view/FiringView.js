@@ -1,5 +1,5 @@
 var rq = [
-    'app/view/PlotView'
+    'app/view/PlotView',
 ];
 define(rq, function(PlotView){
 

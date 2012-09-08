@@ -13,7 +13,7 @@ $item-bg-dark-on:       darken($fg-title, 5%)
 $item-bg-light-hov:     #559eba
 $item-bg-dark-hov:      #3e829e
 
-#firings
+#left-pane
     position: absolute
     top: $header-height
     left: 0
@@ -86,3 +86,42 @@ $item-bg-dark-hov:      #3e829e
     div.edit
         -webkit-transition: opacity 0.2s
         opacity: 1
+
+#import-container
+    height: 0
+    overflow: hidden
+    opacity: 0
+
+#import-container.active
+    height: auto
+    width: $leftpanel-width - (2 * $planck) - 2px /* border */
+    overflow: hidden
+    opacity: 1
+    -webkit-transition: opacity 0.2s
+    color: $fg-body
+    text-shadow: 0 1px 1px white
+    margin: $planck
+    padding: $planck / 2
+    border-radius: 5px
+    background-image: -webkit-linear-gradient($item-bg-light 20%, $item-bg-dark 80%)
+    border-top:    1px solid rgba(255,255,255,0.5)
+    border-left:   1px solid rgba(255,255,255,0.5)
+    border-bottom: 1px solid rgba(0,0,0,0.2)
+    border-right:  1px solid rgba(0,0,0,0.2)
+    box-shadow: 1px 1px 20px rgba(0,0,0,0.2)
+    a
+        margin-right: $planck / 2
+    h2
+        margin-top: 0
+        font-size: $font-size + 1px
+    input
+        border: none
+        padding: 0
+    ul
+        list-style: none
+        margin: 0 0 $planck / 2 0
+        padding: 0
+        font-size: 80%
+        span.size
+            color: lighten($fg-body, 20%)
+            font-style: italic

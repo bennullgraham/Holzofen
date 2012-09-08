@@ -1,0 +1,63 @@
+%script
+    var plupload = window.plupload;
+    var uploader = new plupload.Uploader({
+        runtimes : 'html5',
+        browse_button : 'select-files',
+        container : 'plupload-container',
+        max_file_size : '10mb',
+        url : '/api/1.0/firings/',
+        filters : [
+            {title : "Logfiles", extensions : "txt"}
+        ],
+    });
+
+    $('#upload-files').click(function(e) {
+        uploader.start();
+        e.preventDefault();
+    });
+
+    uploader.init();
+
+    uploader.bind('FilesAdded', function(up, files) {
+        $.each(files, function(i, file) {
+            $('#filelist').append(
+                '<li id="' + file.id + '">' +
+                file.name + ' <span class="size">(' + plupload.formatSize(file.size) + ')</span>' +
+            '</li>');
+        });
+        if ($('#filelist li').length) {
+            $('#upload-files').removeClass('disabled')
+        } else {
+            $('#upload-files').addClass('disabled')
+        }
+
+    });
+
+    uploader.bind('UploadProgress', function(up, file) {
+        $('#' + file.id + " b").html(file.percent + "%");
+    });
+
+    uploader.bind('Error', function(up, err) {
+        $('#plupload-container').append("<div>Error: " + err.code +
+            ", Message: " + err.message +
+            (err.file ? ", File: " + err.file.name : "") +
+            "</div>"
+        );
+    });
+
+    uploader.bind('FileUploaded', function(up, file, info) {
+        $('#' + file.id + " b").html("100%");
+        if (info.status=200) {
+            id = $.parseJSON(info.response)[0];
+            Application.EventBus.trigger('firing:uploaded', id);
+        }
+    });
+
+%div#plupload-container
+    %h2
+        Import Firing Logs
+    %ul#filelist
+    %a#select-files class="button" href="#"
+        Select files
+    %a#upload-files class="button disabled primary" href="#"
+        Upload files
