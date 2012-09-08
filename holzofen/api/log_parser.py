@@ -1,5 +1,5 @@
 import re
-import time
+import calendar
 from datetime import datetime
 
 
@@ -37,7 +37,7 @@ class Parser(object):
     def __parse_meta_date(self, field, data):
         y, mo, d, h, mi, s = [int(t) for t in data.split(' ')]
         dt = datetime(y, mo, d, h, mi, s)
-        self.meta['date'] = time.mktime(dt.timetuple()) * 1000  # Javascript timestamp (POSIX, but in milliseconds)
+        self.meta['date'] = calendar.timegm(dt.timetuple()) * 1000  # Javascript UTC timestamp (POSIX, but in milliseconds)
 
     def __parse_meta_fields(self, field, data):
         self.fields = [f.strip() for f in data.split(',')]
