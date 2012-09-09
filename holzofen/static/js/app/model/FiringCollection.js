@@ -6,7 +6,7 @@ define(['./Firing'], function(Firing) {
         url: '/api/1.0/firings',
         
         comparator: function(firing) {
-            return firing.get('title');
+            return firing.get('data_date');
         }
 
     });

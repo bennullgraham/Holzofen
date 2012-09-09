@@ -30,6 +30,7 @@ define(rq, function(FiringCollection, FiringView, empty) {
             $(this.el).template('holzofen-app', {}, function() {
                 self.input = self.$("#new-firing");
                 Firings.bind('add', self.addOne, self);
+                //Firings.bind('remove', self.removeOne, self);
                 Firings.bind('reset', self.addAll, self);
                 Firings.bind('all', self.render, self);
                 Firings.fetch();
@@ -57,6 +58,10 @@ define(rq, function(FiringCollection, FiringView, empty) {
             Firings.each(this.addOne);
         },
 
+        /*removeOne: function() {
+            Firings
+        }*/
+
         createOnEnter: function(e) {
             if (e.keyCode != 13) return;
             if (!this.input.val()) return;
@@ -78,6 +83,5 @@ define(rq, function(FiringCollection, FiringView, empty) {
 
     });
 
-    var H = new HolzofenView;   
-    return H;
+    return new HolzofenView;
 });

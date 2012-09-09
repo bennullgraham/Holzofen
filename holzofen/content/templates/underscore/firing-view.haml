@@ -1,7 +1,11 @@
-%div.created
-	<%= created_date %>
-%div.title
-	<%= title %>
+%div.date
+	<%= data_date_human %>
+%div.stats
+	%dl
+        %dt << Duration
+        %dd << <%= duration %>
+        %dt << Max Temp
+        %dd << <%= max_temp %>
 %div.edit
-	%a.edit.button
-		Edit
+	%a.delete.button
+		Delete

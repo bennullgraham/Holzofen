@@ -7,11 +7,11 @@ $item-padding-h:        $planck / 2
 $item-bg-light:         rgb(245,245,245)
 $item-bg-dark:          rgb(235,235,235)
 
-$item-bg-light-on:      lighten($fg-title, 5%)
-$item-bg-dark-on:       darken($fg-title, 5%)
-
 $item-bg-light-hov:     #559eba
 $item-bg-dark-hov:      #3e829e
+
+$item-bg-light-on:      $item-bg-light-hov
+$item-bg-dark-on:       $item-bg-dark-hov
 
 #left-pane
     position: absolute
@@ -74,13 +74,31 @@ $item-bg-dark-hov:      #3e829e
         background-image: -webkit-linear-gradient($item-bg-light-on 20%, $item-bg-dark-on 80%)
         color: #fff
 
-    .created
+    div.date
         font-weight: bold
 
     div.edit
         padding: ($planck / 2) 0
         -webkit-transition: opacity 0.2s
         opacity: 0
+
+    div.stats
+        opacity: 0.8
+        font-size: $font-size - 2px
+        dl
+            margin: 0
+            padding: 0
+        dt
+            margin: 0
+            padding: 0
+            display: inline-block
+            &:after
+                content: ":"
+                margin-right: 2px
+        dd
+            margin: 0 $planck/2 0 0
+            padding: 0
+            display: inline-block  
 
 .firing-list-item.active
     div.edit

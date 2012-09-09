@@ -9,17 +9,18 @@ define(rq, function(PlotView){
         className: "firing-list-item",
 
         events: {
-            'click'             : "view",
-            'keypress .edit'    : "updateOnEnter",
-            'blur .edit'        : "close"
+            'click'                 : "view",
+            'keypress .edit'        : "updateOnEnter",
+            'blur .edit'            : "close",
+            'click .edit .delete'   : "delete"
         },
 
         initialize: function(options) {
             var self = this;
 
             self.model.bind('change', self.render, self);
-            self.model.bind('destroy', self.remove, self);
-
+            self.model.bind('destroy', self.close, self);
+            self.model.fetch();
             self.PlotView = new PlotView({model: self.model});
 
             Application.EventBus.on('firing:view', function(id) {
@@ -30,12 +31,10 @@ define(rq, function(PlotView){
 
         render: function() {
             var self = this;
-            // data = self.model.toJSON();
-            // data['created_date'] = new Date(data['created']).toDateString();
-            var data = {
-                created_date: new Date('2011-01-01 01:23').toDateString(),
-                title: 'Empty Firing'
-            };
+            var data = self.model.toJSON();        
+            data['duration'] = Math.round(data['duration'] / (1000  * 60 * 60)) + 'hrs';
+            data['max_temp'] = Math.round(data['max_temp']) + '&deg;c';
+            data['data_date_human'] = new Date(data['data_date']).toDateString();
             
             self.$el.template('firing-view', data, function(){});
             return self;
@@ -52,13 +51,16 @@ define(rq, function(PlotView){
             $(this.el).removeClass('active');
         },
 
-        clear: function() {
-            this.model.clear();
-        },
-
         updateOnEnter: function(e) {
             if (e.keyCode == 13)
                 this.close();
+        },
+
+        delete: function(e) {
+            if (confirm("Delete this firing?")) {
+                this.model.destroy();
+                this.remove();
+            }
         }
     });
 });

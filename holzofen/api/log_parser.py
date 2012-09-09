@@ -1,6 +1,6 @@
 import re
 import calendar
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 class Parser(object):
@@ -9,8 +9,11 @@ class Parser(object):
 
     def __init__(self):
         self.plot_data = {}
-        self.meta = {}
-        self.meta['date'] = datetime.utcnow()
+        self.meta = {
+            'date': datetime.utcnow(),
+            'duration': 0,
+            'max_temp': 0
+        }
         self.parse_function = self.__parse_meta
         self.fields = []
 
@@ -19,9 +22,11 @@ class Parser(object):
             self.parse_function(line)
         return {
             'data': self.plot_data.values(),
-            'data-source': 'log',
-            'data-date': self.meta['date'],
-            'data-fields': self.fields,
+            'source': 'log',
+            'data_date': self.meta['date'],
+            'data_fields': self.fields,
+            'duration': self.meta['duration'],
+            'max_temp': self.meta['max_temp']
         }
 
     def __parse_meta(self, line):
@@ -51,9 +56,13 @@ class Parser(object):
     def __parse_data(self, line):
         time = self.meta['date']
         offset, data = line.split(self.FIELD_SEPARATOR, 1)
-        time += (int(offset) * 1000)
+        offset = int(offset) * 1000
+        self.meta['duration'] = max(self.meta['duration'], offset)
+        time += offset
+
         col = 0
         for temperature in [float(d) for d in data.split(self.FIELD_SEPARATOR)]:
+            self.meta['max_temp'] = max(self.meta['max_temp'], temperature)
             field = self.fields[col]
             self.plot_data[field]['data'].append([time, temperature])
             col += 1
