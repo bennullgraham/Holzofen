@@ -1,7 +1,8 @@
 var rq = [
     'app/view/PlotView',
+    'lib/spin',
 ];
-define(rq, function(PlotView){
+define(rq, function(PlotView, Spinner){
 
     return Backbone.View.extend({
 
@@ -32,13 +33,36 @@ define(rq, function(PlotView){
         render: function() {
             var self = this;
             var data = self.model.toJSON();
-            /* I don't think i should be accounting for timezone here, but apparently I need to */
-            date_human = new Date(data['data_date'] - (10 * 60 * 60 * 1000));
-            data['duration'] = Math.round(data['duration'] / (1000  * 60 * 60)) + 'hrs';
-            data['max_temp'] = Math.round(data['max_temp']) + '&deg;c';
-            data['data_date_human'] = date_human.toDateString();
             
-            self.$el.template('firing-view', data, function(){});
+            if(typeof data['data'] !== 'undefined') {
+                /* I don't think i should be accounting for timezone here, but apparently I need to */
+                date_human = new Date(data['data_date'] - (10 * 60 * 60 * 1000));
+                data['duration'] = Math.round(data['duration'] / (1000  * 60 * 60));
+                data['max_temp'] = Math.round(data['max_temp']);
+                data['data_date_human'] = date_human.toDateString();
+                self.$el.template('firing-view', data, function(){});
+            }
+            else {
+                self.$el.empty();
+                var opts = {
+                    lines: 13, // The number of lines to draw
+                    length: 1, // The length of each line
+                    width: 2, // The line thickness
+                    radius: 6, // The radius of the inner circle
+                    corners: 1, // Corner roundness (0..1)
+                    rotate: 0, // The rotation offset
+                    color: '#000', // #rgb or #rrggbb
+                    speed: 1, // Rounds per second
+                    trail: 60, // Afterglow percentage
+                    shadow: false, // Whether to render a shadow
+                    hwaccel: false, // Whether to use hardware acceleration
+                    className: 'spinner', // The CSS class to assign to the spinner
+                    zIndex: 2e9, // The z-index (defaults to 2000000000)
+                    top: '10px', // Top position relative to parent in px
+                    left: '110px' // Left position relative to parent in px
+                };
+                new Spinner(opts).spin(self.el);
+            }
             return self;
         },
 

@@ -20,6 +20,7 @@ define(rq, function(){
         initialize: function() {
         },
 
+        /* TODO - unretard this */
         view: function() {
             var self = this;
             self.model.fetch({

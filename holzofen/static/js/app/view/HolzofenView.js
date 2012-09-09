@@ -24,14 +24,16 @@ define(rq, function(FiringCollection, FiringView, empty) {
             self.createEventBus(self);
 
             self.EventBus.on('firing:uploaded', function(id) {
+                self.hideUpload();
                 Firings.create({'id': id});
             });
 
             $(this.el).template('holzofen-app', {}, function() {
                 self.input = self.$("#new-firing");
+                self.no_firings = self.$('#no-firings');
                 Firings.bind('add', self.addOne, self);
-                //Firings.bind('remove', self.removeOne, self);
                 Firings.bind('reset', self.addAll, self);
+                Firings.bind('all', self.checkNone, self);
                 Firings.bind('all', self.render, self);
                 Firings.fetch();
             });
@@ -58,9 +60,14 @@ define(rq, function(FiringCollection, FiringView, empty) {
             Firings.each(this.addOne);
         },
 
-        /*removeOne: function() {
-            Firings
-        }*/
+        checkNone: function() {
+            var self = this;
+            if (Firings.length==0) {
+                self.no_firings.show();
+            } else {
+                self.no_firings.hide();
+            }
+        },
 
         createOnEnter: function(e) {
             if (e.keyCode != 13) return;
@@ -78,7 +85,7 @@ define(rq, function(FiringCollection, FiringView, empty) {
         },
 
         hideUpload: function() {
-            this.$('#import-container').empty();
+            this.$('#import-container').removeClass('active');
         }
 
     });

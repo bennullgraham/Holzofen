@@ -36,7 +36,6 @@ $item-bg-dark-on:       $item-bg-dark-hov
         &:first-child:before
             content: ""
 
-
 #firing-list
     list-style: none
     margin: 0 $planck
@@ -74,7 +73,7 @@ $item-bg-dark-on:       $item-bg-dark-hov
         background-image: -webkit-linear-gradient($item-bg-light-on 20%, $item-bg-dark-on 80%)
         color: #fff
 
-    div.date
+    time.date
         font-weight: bold
 
     div.edit
@@ -143,3 +142,11 @@ $item-bg-dark-on:       $item-bg-dark-hov
         span.size
             color: lighten($fg-body, 20%)
             font-style: italic
+
+#no-firings
+    @extend .firing-list-item
+    margin: 0 0 0 $planck
+    height: $planck * 4
+    p
+        margin: 0
+        padding: 0

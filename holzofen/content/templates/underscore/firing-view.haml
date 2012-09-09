@@ -1,11 +1,11 @@
-%div.date
-	<%= data_date_human %>
+%time.date
+    <%= data_date_human %>
 %div.stats
-	%dl
+    %dl
         %dt << Duration
-        %dd << <%= duration %>
+        %dd << <%= duration %>hrs
         %dt << Max Temp
-        %dd << <%= max_temp %>
+        %dd << <%= max_temp %>&deg;c
 %div.edit
-	%a.delete.button
-		Delete
+    %a.delete.button
+        Delete
