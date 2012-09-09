@@ -18,7 +18,9 @@ class Parser(object):
         self.fields = []
 
     def parse(self, file):
+        lines = []
         for line in file.readlines():
+            lines.append(line)
             self.parse_function(line)
         return {
             'data': self.plot_data.values(),
@@ -26,7 +28,8 @@ class Parser(object):
             'data_date': self.meta['date'],
             'data_fields': self.fields,
             'duration': self.meta['duration'],
-            'max_temp': self.meta['max_temp']
+            'max_temp': self.meta['max_temp'],
+            'log_data': lines
         }
 
     def __parse_meta(self, line):
