@@ -31,10 +31,12 @@ define(rq, function(PlotView){
 
         render: function() {
             var self = this;
-            var data = self.model.toJSON();        
+            var data = self.model.toJSON();
+            /* I don't think i should be accounting for timezone here, but apparently I need to */
+            date_human = new Date(data['data_date'] - (10 * 60 * 60 * 1000));
             data['duration'] = Math.round(data['duration'] / (1000  * 60 * 60)) + 'hrs';
             data['max_temp'] = Math.round(data['max_temp']) + '&deg;c';
-            data['data_date_human'] = new Date(data['data_date']).toDateString();
+            data['data_date_human'] = date_human.toDateString();
             
             self.$el.template('firing-view', data, function(){});
             return self;
