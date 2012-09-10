@@ -1,5 +1,6 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, current_app as app
 from hamlish_jinja import HamlishExtension
+from subprocess import check_output, CalledProcessError
 
 content = Blueprint('content', __name__, template_folder='templates')
 
@@ -10,7 +11,13 @@ def init_app(app):
 
 @content.route('/')
 def index():
-    return render_template('index.haml')
+    try:
+        git_dir = '--git-dir=%s' % app.config['GIT_DIR']
+        rev = check_output(['git', git_dir, 'rev-parse', '--short', 'HEAD'])
+    except CalledProcessError:
+        rev = 'unknown'
+    return render_template('index.haml', rev=rev)
+
 
 
 @content.route('/template/<string:template>')
