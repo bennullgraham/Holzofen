@@ -21,7 +21,7 @@
 				x: 10,
 				y: 20
 			},
-			defaultTheme: true
+			defaultTheme: false
 		}
 	};
 

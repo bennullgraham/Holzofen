@@ -2,7 +2,7 @@ rq = [
     'app/model/FiringCollection',
     'app/view/FiringView',
     'app/template',
-    'lib/plupload',
+    'lib/plupload'
 ];
 define(rq, function(FiringCollection, FiringView, empty) {
 
