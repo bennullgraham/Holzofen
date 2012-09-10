@@ -20,7 +20,7 @@ define(rq, function(Spinner, SpinnerConfig){
                 borderWidth: 1,
                 borderColor: 0
             },
-            colors: ['#c40c0c', '#69ae05'],
+            colors: ['#0A5575', '#BA8008', '#BA4008'],
             tooltip: true,
             tooltipOpts: {
                 dateFormat: "%s: %y&deg;c"
