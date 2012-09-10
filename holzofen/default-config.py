@@ -1,4 +1,4 @@
-# Default configuration
+APP_PORT = 5001
 
 MONGO_HOST = 'localhost'
 MONGO_PORT = 27017

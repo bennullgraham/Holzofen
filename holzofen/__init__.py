@@ -26,5 +26,12 @@ content.init_app(app)
 
 
 def run():
-    app.debug = True
-    app.run(host='0.0.0.0', port=5001)
+    if app.debug == True:
+        app.run(host='0.0.0.0', port=app.config['APP_PORT'])
+    else:
+        try:
+            from gevent.wsgi import WSGIServer
+            http_server = WSGIServer(('', app.config['APP_PORT']), app)
+            http_server.serve_forever()
+        except ImportError:
+            print "gevent required"
