@@ -15,7 +15,7 @@ define(rq, function(FiringCollection, FiringView, empty) {
         
         events: {
             'keypress #new-firing'                  : 'createOnEnter',
-            'click #import-firings'                 : 'showUpload',
+            'click .import-firings'                 : 'showUpload',
             'click #plupload-container .upload'     : 'hideUpload'
         },
 
