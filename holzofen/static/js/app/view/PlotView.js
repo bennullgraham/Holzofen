@@ -1,6 +1,7 @@
 rq = [
     'lib/jquery.flot',
-    'lib/jquery.flot.time'
+    'lib/jquery.flot.time',
+    'lib/jquery.flot.tooltip',
 ];
 define(rq, function(){
     return Backbone.View.extend({
@@ -33,8 +34,14 @@ define(rq, function(){
                                 timeformat: "%a %H:%M",
                             },
                             grid: {
+                                hoverable: true,
                                 borderWidth: 1,
                                 borderColor: 0
+                            },
+                            colors: ['#aaa', '#333'],
+                            tooltip: true,
+                            tooltipOpts: {
+                                dateFormat: "%s: %y&deg;c"
                             }
                         };
                         var data = self.model.toJSON();
