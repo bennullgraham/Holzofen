@@ -2,7 +2,8 @@ rq = [
     'app/model/FiringCollection',
     'app/view/FiringView',
     'app/template',
-    'lib/plupload'
+    'lib/plupload',
+    'lib/jquery.bootstrap.modal'
 ];
 define(rq, function(FiringCollection, FiringView, empty) {
 
@@ -14,7 +15,7 @@ define(rq, function(FiringCollection, FiringView, empty) {
         
         events: {
             'keypress #new-firing'                  : 'createOnEnter',
-            'click #firing-util .import'            : 'showUpload',
+            'click #import-firings'                 : 'showUpload',
             'click #plupload-container .upload'     : 'hideUpload'
         },
 
@@ -78,14 +79,18 @@ define(rq, function(FiringCollection, FiringView, empty) {
         },
 
         showUpload: function() {
+            console.dir('show');
             var self = this;
-            self.$('#import-container').template('uploader', {}, function() {
-                self.$('#import-container').addClass('active');
+            var dialog = $('#import-dialog');
+            dialog.template('uploader', {}, function() {
+                dialog.modal('show');
             });
+            
         },
 
         hideUpload: function() {
-            this.$('#import-container').removeClass('active');
+            var dialog = $('#import-dialog');
+            dialog.modal('hide');
         }
 
     });

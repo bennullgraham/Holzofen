@@ -31,6 +31,8 @@ css_core:
          - sass/font.sass
          - sass/core.sass
          - sass/button.sass
+         - sass/sprite.sass
+         - sass/modal.sass
         # application      
          - sass/firing.sass
          - sass/plot.sass

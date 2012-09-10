@@ -56,8 +56,14 @@
 %div#plupload-container
     %h2
         Import Firing Logs
+    %p
+        You can select multiple files. File format is documented here:
+        %a href="http://so-and-so"
+            so-and-so
     %ul#filelist
-    %a#select-files class="button" href="#"
+    %a.button#select-files href="#"
+        %i.icon-folder-open
         Select files
-    %a#upload-files class="button disabled primary" href="#"
+    %a.button.disabled.primary#upload-files href="#"
+        %i.icon-ok-sign.icon-white
         Upload files

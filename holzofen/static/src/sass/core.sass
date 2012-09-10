@@ -1,6 +1,6 @@
 @import "constants"
 
-
+$util_width:    $planck * 7
 html
     height: 100%
 
@@ -8,6 +8,7 @@ body
     font-size: $font-size
     line-height: $line-height
     padding: $header-height 0 0 $leftpanel-width
+    background-color: #f9f9f9
     background-repeat: no-repeat
     color: $fg-body
 
@@ -16,28 +17,42 @@ a
     text-decoration: none
     &:hover
         text-decoration: underline
+header
 
-h1
-    position: absolute
-    top: 0
-    left: 0
-    text-align: center
-    line-height: $header-height
-    height: $header-height
-    width: 100%
-    font-family: 'Headland One', serif
-    font-size: 40px
-    color: #3a3b39
-    background-color: #fff
-    z-index: 999
-    vertical-align: middle
-    margin: 0
-    padding: 0
-    &:first-letter 
-        font-size: 48px
+    h1
+        background-image: -webkit-linear-gradient(#fff, #f9f9f9)
+        font-weight: normal
+        position: absolute
+        top: 0
+        left: 0
+        right: 0
+        text-align: center
+        line-height: $header-height
+        height: $header-height - 1
+        font-family: 'Amaranth', serif
+        font-size: $planck * 1.5
+        color: #666
+        text-shadow: 0 1px 1px white
+        background-color: #333
+        z-index: 999
         vertical-align: middle
-    span 
-        color: #8e9186
+        margin: 0
+        padding: 0 $util_width
+        box-shadow: 0 0 20px rgba(0,0,0,0.15)
+        border-bottom: 1px solid #ddd
+
+    nav#tools
+        opacity: 0.5
+        -webkit-transition: opacity 0.2s
+        position: absolute
+        z-index: 1000
+        top: ($header-height / 2) - (30 / 2) /* button height */
+        left: $planck
+        width: $util_width
+        height: $header-height
+    &:hover nav#tools
+        opacity: 1
+        -webkit-transition: opacity 0.2s
 
 
 input 
@@ -45,11 +60,29 @@ input
     border: 1px solid #b8b09e
     width: 175px
 
-#content-pane
-    z-index: 1000
-    padding: 0 $planck $planck $planck
+#HolzofenApp
     position: absolute
-    left: $leftpanel-width
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    padding: 20px
+
+#left-pane
+    position: absolute
+    top: $planck + $header-height
+    left: 0
+    bottom: 0
+    width: $leftpanel-width
+
+#content-pane
+    position: absolute
+    z-index: 100
+    padding: $planck 0 $planck $planck
+    left: $leftpanel-width + $planck
     right: 0
     top: $header-height
     bottom: 0
+    border-left: 1px solid #d9d9d9
+    box-shadow: -1px 0 0 #fff
+    background-color: #f3f3f3

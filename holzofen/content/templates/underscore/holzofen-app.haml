@@ -1,11 +1,19 @@
+%header
+    %h1
+        Holzofen
+    %nav#tools
+        %a.button#import-firings href="#"
+            %i.icon-upload
+            Import...
 %div#left-pane
     %div#no-firings
         %p
             %strong << Uhoh <br />
-            There are no firings in the database. Maybe import one?
+            There are no firings in the database. Maybe import one? <br />
+            %a.button#import-firings
+                %i.icon-upload
+                Import
     %ul#firing-list
-    %ul#firing-util
-        %li -> %a.import href="#" << Import...
-    %div#import-container
+    %div#import-dialog.modal style="display: none"
 %div#content-pane
     <!-- %input#new-firing -->

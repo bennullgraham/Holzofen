@@ -4,11 +4,7 @@
         -block head
             -include 'layout/head.haml'
     %body
-        %header
-            -block header
-                -include 'layout/header.haml'
-        %div.container
-            -block content
+        -block content
         %footer
             -block footer
                 -include 'layout/footer.haml'
