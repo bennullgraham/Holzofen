@@ -3,3 +3,6 @@ holzofen/static/src/.webassets-cache/
 holzofen/static/css/core.css
 local-config.py
 docs/_build
+Holzofen.egg-info/
+build/
+dist/
