@@ -7,7 +7,11 @@ class MissingFieldException(Exception):
     pass
 
 
-class Parser(object):
+class UnknownSeriesException(Exception):
+    pass
+
+
+class LogParser(object):
 
     FIELD_SEPARATOR = "\t"
 
@@ -79,3 +83,47 @@ class Parser(object):
         for r in required:
             if not r in self.meta:
                 raise MissingFieldException("Field '%s' missing from log file header" % r)
+
+
+class LiveParser(object):
+
+    OFFSET_KEY = 'offset'
+    
+    def parse(self, firing, data):
+        self.firing = firing
+        self.data = data
+
+        offset = self.data.get('offset')
+        if not offset:
+            raise MissingFieldException("offset missing from submitted data")
+
+        if not self.firing['data_fields']:
+            self.__init_data_series()
+
+        self.__iterate_data(offset)
+
+        return self.firing
+
+    def __init_data_series(self):
+        series = [s for s in self.data.keys() if not s == self.OFFSET_KEY]
+        self.firing['data_fields'] = series
+        self.firing['data'] = [{'data': [], 'label': s} for s in series]
+
+    def __iterate_data(self, offset):
+        for label, temperature in self.data.iteritems():
+            if label == self.OFFSET_KEY:
+                pass
+            elif label not in self.firing['data_fields']:
+                raise UnknownSeriesException("didn't recoginise series label %s" % label)
+            else:
+                self.__insert_data_point(label, offset, temperature)
+
+    def __insert_data_point(self, label, offset, temperature):
+        offset = int(offset)
+        temperature = float(temperature)
+        # unfortunately the data is not indexed by label, so we have to loop over
+        # each series to find the correct label.
+        for n, series in enumerate(self.firing['data']):
+            if series['label'] == label:
+                print self.firing['data'][n]
+                self.firing['data'][n]['data'].append([offset, temperature])

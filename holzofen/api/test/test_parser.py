@@ -1,6 +1,7 @@
 import unittest
 import re
-from holzofen.api.log_parser import Parser, MissingFieldException
+from holzofen.api.parser import LogParser, MissingFieldException
+
 
 class MockFile(object):
     def __init__(self):
@@ -18,7 +19,7 @@ class MockFile(object):
 class TestLogParser(unittest.TestCase):
 
     def setUp(self):
-        self.parser = Parser()
+        self.parser = LogParser()
         self.log = MockFile()
         self.output = self.parser.parse(self.log)
 
@@ -44,17 +45,18 @@ class TestLogParser(unittest.TestCase):
 
     def test_Series(self):
         expected = [
-            {'data': [[1346960794000, 20.0], [1346960809000, 22.1], [1346960824000, 24.4]], 'label': 'Brick Temperature'}, 
-            {'data': [[1346960794000, 40.0], [1346960809000, 45.8], [1346960824000, 53.1]], 'label': 'Oven Temperature'}, 
+            {'data': [[1346960794000, 20.0], [1346960809000, 22.1], [1346960824000, 24.4]], 'label': 'Brick Temperature'},
+            {'data': [[1346960794000, 40.0], [1346960809000, 45.8], [1346960824000, 53.1]], 'label': 'Oven Temperature'},
             {'data': [[1346960794000, 31.3], [1346960809000, 40.8], [1346960824000, 49.7]], 'label': 'Chimney Temperature'}
         ]
         actual = self.output['data']
         self.assertEqual(expected, actual)
 
+
 class TestLogParserMissingMeta(unittest.TestCase):
 
     def setUp(self):
-        self.parser = Parser()
+        self.parser = LogParser()
 
     def test_MissingFields(self):
         log = MockFile().without('Fields')
