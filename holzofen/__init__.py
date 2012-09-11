@@ -10,8 +10,8 @@ app = Flask(__name__)
 app.config.from_object('holzofen.default-config')
 if os.path.isfile('local-config.py'):
     app.config.from_object('local-config')
-if os.environ.get('SUBFUSC_SETTINGS'):
-    app.config.from_envvar('SUBFUSC_SETTINGS')
+if os.environ.get('HOLZOFEN_SETTINGS'):
+    app.config.from_envvar('HOLZOFEN_SETTINGS')
 
 # hax
 app.url_map.converters['ObjectId'] = BSONObjectIdConverter
