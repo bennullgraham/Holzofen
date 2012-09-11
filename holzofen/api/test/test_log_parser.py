@@ -1,12 +1,25 @@
 import unittest
+import re
 from holzofen.api.log_parser import Parser, MissingFieldException
+
+class MockFile(object):
+    def __init__(self):
+        here = __file__.rsplit('/', 1)[0]
+        self.lines = open('%s/firing.log' % here, 'r').readlines()
+
+    def without(self, regex):
+        self.lines = [l for l in self.lines if not re.match(regex, l)]
+        return self
+
+    def readlines(self):
+        return self.lines
+
 
 class TestLogParser(unittest.TestCase):
 
     def setUp(self):
-        here = __file__.rsplit('/', 1)[0]
         self.parser = Parser()
-        self.log = open('%s/firing.log' % here, 'r')
+        self.log = MockFile()
         self.output = self.parser.parse(self.log)
 
     def test_Fields(self):
@@ -38,12 +51,16 @@ class TestLogParser(unittest.TestCase):
         actual = self.output['data']
         self.assertEqual(expected, actual)
 
-class TestLogParserInvalidMeta(unittest.TestCase):
+class TestLogParserMissingMeta(unittest.TestCase):
 
     def setUp(self):
         self.parser = Parser()
 
-    def test_MissingFieldFields(self):
-        here = __file__.rsplit('/', 1)[0]
-        log = open('%s/firing-missing-meta-fields.log' % here, 'r')
+    def test_MissingFields(self):
+        log = MockFile().without('Fields')
         self.assertRaises(MissingFieldException, self.parser.parse, log)
+
+    def test_MissingDate(self):
+        log = MockFile().without('Date')
+        # this should raise no exception
+        self.parser.parse(log)
