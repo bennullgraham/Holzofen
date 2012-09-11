@@ -1,6 +1,10 @@
 import re
 import calendar
-from datetime import datetime, timedelta
+from datetime import datetime
+
+
+class MissingFieldException(Exception):
+    pass
 
 
 class Parser(object):
@@ -10,12 +14,11 @@ class Parser(object):
     def __init__(self):
         self.plot_data = {}
         self.meta = {
-            'date': datetime.utcnow(),
+            'date': calendar.timegm(datetime.utcnow().timetuple()),
             'duration': 0,
             'max_temp': 0
         }
         self.parse_function = self.__parse_meta
-        self.fields = []
 
     def parse(self, file):
         lines = []
@@ -26,7 +29,7 @@ class Parser(object):
             'data': self.plot_data.values(),
             'source': 'log',
             'data_date': self.meta['date'],
-            'data_fields': self.fields,
+            'data_fields': self.meta['fields'],
             'duration': self.meta['duration'],
             'max_temp': self.meta['max_temp'],
             'log_data': lines
@@ -37,8 +40,9 @@ class Parser(object):
             'Date': self.__parse_meta_date,
             'Fields': self.__parse_meta_fields,
         }
-        # check for separator
+        # empty line signals transition from metadata to data
         if re.match('^\s*$', line):
+            self.__check_required_meta_fields()
             self.parse_function = self.__parse_data
         else:
             tokens = line.split(':', 1)
@@ -53,8 +57,8 @@ class Parser(object):
         self.meta['date'] = calendar.timegm(dt.timetuple()) * 1000  # Javascript UTC timestamp (POSIX, but in milliseconds)
 
     def __parse_meta_fields(self, field, data):
-        self.fields = [f.strip() for f in data.split(',')]
-        self.plot_data = dict([(f, {'label': f, 'data': []}) for f in self.fields])
+        self.meta['fields'] = [f.strip() for f in data.split(',')]
+        self.plot_data = dict([(f, {'label': f, 'data': []}) for f in self.meta['fields']])
 
     def __parse_data(self, line):
         time = self.meta['date']
@@ -66,6 +70,12 @@ class Parser(object):
         col = 0
         for temperature in [float(d) for d in data.split(self.FIELD_SEPARATOR)]:
             self.meta['max_temp'] = max(self.meta['max_temp'], temperature)
-            field = self.fields[col]
+            field = self.meta['fields'][col]
             self.plot_data[field]['data'].append([time, temperature])
             col += 1
+
+    def __check_required_meta_fields(self):
+        required = ['fields']
+        for r in required:
+            if not r in self.meta:
+                raise MissingFieldException("Field '%s' missing from log file header" % r)
