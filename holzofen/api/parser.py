@@ -119,11 +119,10 @@ class LiveParser(object):
                 self.__insert_data_point(label, offset, temperature)
 
     def __insert_data_point(self, label, offset, temperature):
-        offset = int(offset)
+        time = self.firing['data_date'] + (int(offset) * 1000)
         temperature = float(temperature)
         # unfortunately the data is not indexed by label, so we have to loop over
         # each series to find the correct label.
         for n, series in enumerate(self.firing['data']):
             if series['label'] == label:
-                print self.firing['data'][n]
-                self.firing['data'][n]['data'].append([offset, temperature])
+                self.firing['data'][n]['data'].append([time, temperature])
