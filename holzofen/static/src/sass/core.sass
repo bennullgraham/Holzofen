@@ -1,6 +1,6 @@
 @import "constants"
 
-$util_width:    $planck * 7
+$util_width:    $planck * 16
 html
     height: 100%
 
@@ -50,6 +50,8 @@ header
         left: $planck
         width: $util_width
         height: $header-height
+        a.button
+            margin-right: $planck / 2
     &:hover nav#tools
         opacity: 1
         -webkit-transition: opacity 0.2s
@@ -94,6 +96,11 @@ div.revision
     right: 0
     background: white
     font-size: 90%
-    opacity: 0.5
+    opacity: 0.1
+    -webkit-transition: opacity 0.2s
     padding: $planck / 2
     border-radius: 5px
+    cursor: default
+    &:hover
+        opacity: 1.0
+        -webkit-transition: opacity 0.2s

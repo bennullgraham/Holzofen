@@ -6,8 +6,9 @@ $button-bg-lowlight:    #333
 
 $button-border:         #bbb
 
-$primary-bg-highlight:  #82C462
-$primary-bg:            #419341
+$primary-bg-highlight:  #555
+$primary-bg:            #333
+$primary-border:        #444
 
 
 /* thankyou, twitter bootstrap */
@@ -77,6 +78,9 @@ $primary-bg:            #419341
         &:active
             background-image: none
             background-color: darken($primary-bg-highlight, 10%)
+        i
+            margin-right: 7px
+            background-image: url("/static/img/glyphicons-halflings-white.png")
 
     // Disabled state
     &.disabled,
