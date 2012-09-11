@@ -29,3 +29,13 @@ $ python Holzofen.py
 ````
 
 ... then browse to `http://localhost:5001`
+
+Tests
+----------
+Run:
+
+````
+python setup.py test
+`````
+
+yourself, or see results on Travis: [![Build Status](https://secure.travis-ci.org/bennullgraham/Holzofen.png)](http://travis-ci.org/bennullgraham/Holzofen)
