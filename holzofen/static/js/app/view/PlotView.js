@@ -43,6 +43,8 @@ define(rq, function(Spinner, SpinnerConfig){
                 });
             }
             else {
+                // only load in plot data now, when definitely necessary.
+                self.model.fetch()
                 opts = SpinnerConfig['plot-view'];
                 new Spinner(opts).spin(self.el);
             }
@@ -52,7 +54,7 @@ define(rq, function(Spinner, SpinnerConfig){
         initialize: function() {
             var self = this;
             $(window).on("resize.app", _.bind(this.render, this));
-            self.model.bind('change', self.render, self);
+            self.model.bind('change:data', self.render, self);
         },
 
         view: function() {

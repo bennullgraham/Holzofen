@@ -16,9 +16,12 @@ define(function() {
         top: '10px', // Top position relative to parent in px
         left: '110px' // Left position relative to parent in px
     };
-	return {
+	var configs = {
 		'default': defaultSpinner,
 		'firing-view': defaultSpinner,
 		'plot-view': defaultSpinner
 	};
+    configs['plot-view']['top'] = 'auto';
+    configs['plot-view']['left'] = 'auto';
+    return configs
 });

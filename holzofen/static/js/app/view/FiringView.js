@@ -21,7 +21,7 @@ define(rq, function(PlotView, Spinner){
 
             self.model.bind('change', self.render, self);
             self.model.bind('destroy', self.close, self);
-            self.model.fetch();
+            //self.model.fetch();
             self.PlotView = new PlotView({model: self.model});
 
             Application.EventBus.on('firing:view', function(id) {
@@ -34,11 +34,11 @@ define(rq, function(PlotView, Spinner){
             var self = this;
             var data = self.model.toJSON();
             
-            if(typeof data['data'] !== 'undefined') {
+            if(typeof data['data_date'] !== 'undefined') {
                 /* I don't think i should be accounting for timezone here, but apparently I need to */
                 date_human = new Date(data['data_date'] - (10 * 60 * 60 * 1000));
-                data['duration'] = Math.round(data['duration'] / (1000  * 60 * 60));
-                data['max_temp'] = Math.round(data['max_temp']);
+                data['duration'] = self.model.duration();
+                data['max_temp'] = self.model.maxTemp();
                 data['data_date_human'] = date_human.toDateString();
                 self.$el.template('firing-view', data, function(){});
             }

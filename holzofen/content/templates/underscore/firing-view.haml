@@ -3,9 +3,9 @@
 %div.stats
     %dl
         %dt << Duration
-        %dd << <%= duration %>hrs
+        %dd << <%= typeof(duration)!== 'undefined' ?  duration + 'hrs' : '' %>
         %dt << Max Temp
-        %dd << <%= max_temp %>&deg;c
+        %dd << <%= typeof(max_temp)!== 'undefined' ?  max_temp + '&deg;c' : '' %>
 %div.edit
     %a.delete.button
         Delete
