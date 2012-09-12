@@ -154,7 +154,6 @@ Example Requests
     # Trying 176.34.29.250...
     # Connected to holzofen.bgraham.com.au.
     # Escape character is '^]'.
-    Host: holzofen.bgraham.com.au
     PUT /api/1.0/firings/504f1623f175e01596b7c718?mode=append HTTP/1.1
     Host: holzofen.bgraham.com.au
     Content-Length: 56
