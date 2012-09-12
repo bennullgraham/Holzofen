@@ -16,6 +16,7 @@ define(rq, function(Spinner, SpinnerConfig){
                 timeformat: "%a %H:%M"
             },
             grid: {
+                backgroundColor: '#f9f9f9',
                 hoverable: true,
                 borderWidth: 1,
                 borderColor: 0
