@@ -3,7 +3,8 @@ rq = [
     'app/view/FiringView',
     'app/template',
     'lib/plupload',
-    'lib/jquery.bootstrap.modal'
+    'lib/jquery.bootstrap.modal',
+    'lib/jquery.bootstrap.tooltip'
 ];
 define(rq, function(FiringCollection, FiringView, empty) {
 
@@ -19,6 +20,10 @@ define(rq, function(FiringCollection, FiringView, empty) {
             'click #plupload-container .upload'     : 'hideUpload'
         },
 
+        tooltipOpts: {
+            placement: 'bottom'
+        },
+
         initialize: function() {
             var self = this;
 
@@ -32,6 +37,7 @@ define(rq, function(FiringCollection, FiringView, empty) {
             $(this.el).template('holzofen-app', {}, function() {
                 self.input = self.$("#new-firing");
                 self.no_firings = self.$('#no-firings');
+                $('#header-nav a').tooltip(self.tooltipOpts);
                 Firings.bind('add', self.addOne, self);
                 Firings.bind('reset', self.addAll, self);
                 Firings.bind('all', self.checkNone, self);

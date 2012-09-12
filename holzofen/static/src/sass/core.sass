@@ -1,6 +1,7 @@
 @import "constants"
 
-$util_width:    $planck * 16
+$util-width:    $planck * 20
+
 html
     height: 100%
 
@@ -37,22 +38,45 @@ header
         z-index: 999
         vertical-align: middle
         margin: 0
-        padding: 0 $util_width
+        padding: 0 $util-width
         box-shadow: 0 0 20px rgba(0,0,0,0.15)
         border-bottom: 1px solid #ddd
 
-    nav#tools
+    nav#header-nav
         opacity: 0.5
         -webkit-transition: opacity 0.2s
         position: absolute
         z-index: 1000
-        top: ($header-height / 2) - (30 / 2) /* button height */
-        left: $planck
-        width: $util_width
+        top: 0
+        left: 0
+        width: $util-width
         height: $header-height
-        a.button
-            margin-right: $planck / 2
-    &:hover nav#tools
+        ul
+            margin: 0
+            padding: 0
+        li
+            margin: 0
+            padding: 0
+            display: inline-block
+        a
+            display: block
+            height: $header-height
+            line-height: $header-height
+            font-family: 'Amaranth', serif
+            font-size: $font-size + 4px
+            font-weight: bold
+            padding: 0 $planck
+            border-left: 2px solid rgba(255,255,255,1)
+            border-right: 2px solid rgba(0,0,0,0.05)
+            color: $fg-body
+            i
+                vertical-align: baseline
+                margin-right: 5px
+            &:hover
+                color: $fg-title
+                text-decoration: none
+
+    &:hover nav#header-nav
         opacity: 1
         -webkit-transition: opacity 0.2s
 

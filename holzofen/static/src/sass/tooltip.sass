@@ -1,0 +1,73 @@
+$tooltipArrowWidth:   5px
+
+// Base class
+.tooltip
+    position: absolute
+    z-index: 10000
+    display: block
+    visibility: visible
+    padding: 5px
+    font-size: 11px
+    opacity: 0
+    -webkit-transition: opacity 0.2s
+    &.in
+        opacity: 0.9
+        -webkit-transition: opacity 0.2s
+    &.top
+        margin-top:  -3px
+    &.right
+        margin-left:  3px
+    &.bottom
+        margin-top:   3px
+    &.left
+        margin-left: -3px
+
+
+// Wrapper for the tooltip content
+.tooltip-inner
+    max-width: 200px
+    padding: 3px 8px
+    color: #eee
+    text-align: center
+    text-decoration: none
+    background-color: #111
+    border-radius: 4px
+
+
+// Arrows
+.tooltip-arrow
+    position: absolute
+    width: 0
+    height: 0
+    border-color: transparent
+    border-style: solid
+
+.tooltip
+    &.top .tooltip-arrow
+        bottom: 0
+        left: 50%
+        margin-left: -$tooltipArrowWidth
+        border-width: $tooltipArrowWidth $tooltipArrowWidth 0
+        border-top-color: #111
+    
+    &.right .tooltip-arrow
+        top: 50%
+        left: 0
+        margin-top: -$tooltipArrowWidth
+        border-width: $tooltipArrowWidth $tooltipArrowWidth $tooltipArrowWidth 0
+        border-right-color: #111
+    
+    &.left .tooltip-arrow
+        top: 50%
+        right: 0
+        margin-top: -$tooltipArrowWidth
+        border-width: $tooltipArrowWidth 0 $tooltipArrowWidth $tooltipArrowWidth
+        border-left-color: #111
+    
+    &.bottom .tooltip-arrow
+        top: 0
+        left: 30%
+        margin-left: -$tooltipArrowWidth
+        border-width: 0 $tooltipArrowWidth $tooltipArrowWidth
+        border-bottom-color: #111
+    

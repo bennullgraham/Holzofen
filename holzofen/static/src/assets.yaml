@@ -33,6 +33,7 @@ css_core:
          - sass/button.sass
          - sass/sprite.sass
          - sass/modal.sass
+         - sass/tooltip.sass
         # application      
          - sass/firing.sass
          - sass/plot.sass

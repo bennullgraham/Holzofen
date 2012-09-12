@@ -1,16 +1,17 @@
 %header
     %h1
         Holzofen
-    %nav#tools
-        %a.button.primary.import-firings href="#"
-            %i.icon-upload
-            Import
-        %a.button href="/docs/" target="_blank"
-            %i.icon-book
-            Docs
-        %a.button href="https://github.com/bennullgraham/Holzofen/" target="_blank"
-            %i.icon-file
-            Source
+    %nav#header-nav
+        %ul
+            %li -> %a.import-firings href="#" rel="tooltip" title="Upload a file containing temperature data"
+                %i.icon-upload
+                Import
+            %li -> %a href="/docs/" target="_blank" rel="tooltip" title="Browse technical documentation"
+                %i.icon-book
+                Docs
+            %li -> %a href="https://github.com/bennullgraham/Holzofen/" rel="tooltip" target="_blank" title="View source code for this site on GitHub"
+                %i.icon-file
+                Source
 %div#left-pane
     %div#no-firings
         %p
