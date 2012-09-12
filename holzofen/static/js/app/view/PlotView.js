@@ -13,7 +13,7 @@ define(rq, function(Spinner, SpinnerConfig){
         plotOpts: {
             xaxis: {
                 mode: "time",
-                timeformat: "%a %H:%M",
+                timeformat: "%a %H:%M"
             },
             grid: {
                 hoverable: true,
@@ -32,7 +32,7 @@ define(rq, function(Spinner, SpinnerConfig){
             var data = self.model.toJSON();
 
             // don't render if this view is not in the DOM
-            if (self.$el.context.parentElement == null) {
+            if (self.$el.context.parentElement === null) {
                 return self;
             }
             if(typeof data['data'] !== 'undefined') {

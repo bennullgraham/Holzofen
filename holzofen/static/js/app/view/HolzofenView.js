@@ -69,7 +69,7 @@ define(rq, function(FiringCollection, FiringView, empty) {
 
         checkNone: function() {
             var self = this;
-            if (Firings.length==0) {
+            if (Firings.length === 0) {
                 self.no_firings.show();
             } else {
                 self.no_firings.hide();
