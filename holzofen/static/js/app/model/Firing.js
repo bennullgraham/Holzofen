@@ -8,11 +8,11 @@ define(function(PlotData){
             this.destroy();
         },
 
-/** 
+/**
  * return timestamp from last element of
  * first data series. this should be the
  * highest timestamp and thus duration.
- * 
+ *
  * assumption: all series have same number
  * of data points.
  */
@@ -21,8 +21,9 @@ define(function(PlotData){
             if (!data || !data.length) return undefined;
 
             var toHrs = 1000 * 60 * 60;
-            l = _.last(data[0]['data'])[0]
-            return Math.round(l / toHrs);
+            earliest  =_.first(data[0]['data'])[0];
+            latest    = _.last(data[0]['data'])[0];
+            return Math.round((latest - earliest) / toHrs);
         },
 
 /**
@@ -37,7 +38,7 @@ define(function(PlotData){
             if (!data || !data.length) return undefined;
 
             _.each(data, function(series){
-                thisMax = _.max(series.data, function(d){ return d[1] })[1];
+                thisMax = _.max(series.data, function(d){ return d[1]; })[1];
                 maxTemp = _.max([maxTemp, thisMax]);
             });
             return Math.round(maxTemp);
