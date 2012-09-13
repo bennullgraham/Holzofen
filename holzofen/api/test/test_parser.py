@@ -33,16 +33,6 @@ class TestLogParser(unittest.TestCase):
         actual = self.output['data_date']
         self.assertEqual(expected, actual)
 
-    def test_Duration(self):
-        expected = 30000
-        actual = self.output['duration']
-        self.assertEqual(expected, actual)
-
-    def test_MaxTemp(self):
-        expected = 53.1
-        actual = self.output['max_temp']
-        self.assertEqual(expected, actual)
-
     def test_Series(self):
         expected = [
             {'data': [[1346960794000, 20.0], [1346960809000, 22.1], [1346960824000, 24.4]], 'label': 'Brick Temperature'},
@@ -86,9 +76,7 @@ class TestLiveParser(unittest.TestCase):
            ],
            'data_date': 1335018780000,
            'data_fields': ['Oven Temperature', 'Brick Temperature'],
-           'duration': 65580000,
            'log_data': None,
-           'max_temp': 507.0,
            'source': 'POST'
         }
 
