@@ -53,7 +53,8 @@ def firing_update(firing_id):
 def firing_index():
     c = db.firings
     firings = c.find(spec={'deleted': {'$exists': False}},
-                     fields=['_id', 'data_date']
+                     fields=['_id', 'data_date'],
+                     sort=['data_date', 'DESCENDING']
     )
     return util.to_dict(firings)
 

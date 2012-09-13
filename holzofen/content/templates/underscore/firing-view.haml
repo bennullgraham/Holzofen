@@ -1,11 +1,13 @@
 %time.date
     <%= data_date_human %>
 %div.stats
+    <% if (typeof(duration) !== 'undefined' ){ %>
     %dl
         %dt << Duration
-        %dd << <%= typeof(duration)!== 'undefined' ?  duration + 'hrs' : '' %>
+        %dd << <%= duration %>hrs
         %dt << Max Temp
-        %dd << <%= typeof(max_temp)!== 'undefined' ?  max_temp + '&deg;c' : '' %>
+        %dd << <%= max_temp %>&deg;c
+    <% } %>
 %div.edit
     %a.delete.button
         Delete

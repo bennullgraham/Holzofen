@@ -34,8 +34,6 @@ class LogParser(object):
             'source': 'log',
             'data_date': self.meta['date'],
             'data_fields': self.meta['fields'],
-            'duration': self.meta['duration'],
-            'max_temp': self.meta['max_temp'],
             'log_data': lines
         }
 
