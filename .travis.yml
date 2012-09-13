@@ -4,6 +4,6 @@ python:
 services:
   - mongodb
 install:
-  - pip install -r requirements.txt --use-mirrors
+  - pip install -r requirements.txt --use-mirrors --quiet
 script:
   - python setup.py test
