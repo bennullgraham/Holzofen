@@ -1,8 +1,9 @@
 var rq = [
     'app/view/PlotView',
     'lib/spin',
+    'app/SpinnerConfig'
 ];
-define(rq, function(PlotView, Spinner){
+define(rq, function(PlotView, Spinner, SpinnerConfig){
 
     return Backbone.View.extend({
 
@@ -44,23 +45,7 @@ define(rq, function(PlotView, Spinner){
             }
             else {
                 self.$el.empty();
-                var opts = {
-                    lines: 13, // The number of lines to draw
-                    length: 1, // The length of each line
-                    width: 2, // The line thickness
-                    radius: 6, // The radius of the inner circle
-                    corners: 1, // Corner roundness (0..1)
-                    rotate: 0, // The rotation offset
-                    color: '#000', // #rgb or #rrggbb
-                    speed: 1, // Rounds per second
-                    trail: 60, // Afterglow percentage
-                    shadow: false, // Whether to render a shadow
-                    hwaccel: false, // Whether to use hardware acceleration
-                    className: 'spinner', // The CSS class to assign to the spinner
-                    zIndex: 2e9, // The z-index (defaults to 2000000000)
-                    top: '10px', // Top position relative to parent in px
-                    left: '110px' // Left position relative to parent in px
-                };
+                var opts = SpinnerConfig['firing-view'];
                 new Spinner(opts).spin(self.el);
             }
             return self;

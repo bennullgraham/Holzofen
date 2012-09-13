@@ -1,4 +1,7 @@
-define(['./Firing'], function(Firing) {
+var rq = [
+	'app/model/Firing'
+];
+define(rq, function(Firing) {
     return Backbone.Collection.extend({
 
         model: Firing,

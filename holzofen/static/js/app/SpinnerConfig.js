@@ -19,9 +19,11 @@ define(function() {
 	var configs = {
 		'default': defaultSpinner,
 		'firing-view': defaultSpinner,
-		'plot-view': defaultSpinner
+		'plot-view': defaultSpinner,
+        'content-view': defaultSpinner,
+        'content-collection-view': defaultSpinner
 	};
     configs['plot-view']['top'] = 'auto';
     configs['plot-view']['left'] = 'auto';
-    return configs
+    return configs;
 });

@@ -44,8 +44,8 @@ define(rq, function(Spinner, SpinnerConfig){
             }
             else {
                 // only load in plot data now, when definitely necessary.
-                self.model.fetch()
-                opts = SpinnerConfig['plot-view'];
+                self.model.fetch();
+                var opts = SpinnerConfig['plot-view'];
                 new Spinner(opts).spin(self.el);
             }
             return self;
