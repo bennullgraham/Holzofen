@@ -1,23 +1,18 @@
 rq = [
-    'app/model/FiringCollection',
-    'app/view/FiringView',
+    'app/view/FiringCollectionView',
     'app/view/ContentCollectionView',
     'app/template',
     'lib/plupload',
     'lib/jquery.bootstrap.modal',
     'lib/jquery.bootstrap.tooltip'
 ];
-define(rq, function(FiringCollection, FiringView, ContentCollectionView) {
-
-    var Firings = new FiringCollection;
-    var ContentCollectionView = new ContentCollectionView
+define(rq, function(FiringCollectionView, ContentCollectionView) {
 
     var HolzofenView = Backbone.View.extend({
 
         el: $('#HolzofenApp'),
         
         events: {
-            'keypress #new-firing'                  : 'createOnEnter',
             'click .import-firings'                 : 'showUpload',
             'click #plupload-container .upload'     : 'hideUpload'
         },
@@ -31,22 +26,17 @@ define(rq, function(FiringCollection, FiringView, ContentCollectionView) {
 
             self.createEventBus(self);
 
-            self.EventBus.on('firing:uploaded', function(id) {
-                self.hideUpload();
-                Firings.create({'id': id});
-            });
+            
 
             $(this.el).template('holzofen-app', {}, function() {
-                self.input = self.$("#new-firing");
-                self.no_firings = self.$('#no-firings');
-                $('#header-nav a').tooltip(self.tooltipOpts);
-                Firings.bind('add', self.addOne, self);
-                Firings.bind('reset', self.addAll, self);
-                Firings.bind('all', self.checkNone, self);
-                Firings.bind('all', self.render, self);
-                Firings.fetch();
+                self.$no_firings = self.$('#no-firings');
 
-                $('#left-pane').prepend(ContentCollectionView.render().el);
+                self.ContentsView = new ContentCollectionView;
+                self.FiringsView = new FiringCollectionView;
+                $('#header-nav a').tooltip(self.tooltipOpts);
+
+                $('#left-pane').append(self.ContentsView.render().el);
+                $('#left-pane').append(self.FiringsView.render().el);
             });
         },
 
@@ -62,14 +52,6 @@ define(rq, function(FiringCollection, FiringView, ContentCollectionView) {
             // ...
         },
 
-        addOne: function (firing) {
-            var view = new FiringView({model: firing});
-            this.$('#firing-list').append(view.render().el);
-        },
-
-        addAll: function () {
-            Firings.each(this.addOne);
-        },
 
         checkNone: function() {
             var self = this;
@@ -78,14 +60,6 @@ define(rq, function(FiringCollection, FiringView, ContentCollectionView) {
             } else {
                 self.no_firings.hide();
             }
-        },
-
-        createOnEnter: function(e) {
-            if (e.keyCode != 13) return;
-            if (!this.input.val()) return;
-
-            Firings.create({data: this.input.val()});
-            this.input.val('');
         },
 
         showUpload: function() {

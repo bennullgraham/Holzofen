@@ -1,9 +1,8 @@
 var rq = [
-    'app/view/PlotView',
     'lib/spin',
     'app/SpinnerConfig'
 ];
-define(rq, function(PlotView, Spinner, SpinnerConfig){
+define(rq, function(Spinner, SpinnerConfig){
 
     return Backbone.View.extend({
 
@@ -23,7 +22,7 @@ define(rq, function(PlotView, Spinner, SpinnerConfig){
             self.model.bind('change', self.render, self);
             self.model.bind('destroy', self.close, self);
             //self.model.fetch();
-            self.PlotView = new PlotView({model: self.model});
+            //self.PlotView = new PlotView({model: self.model});
 
             Application.EventBus.on('firing:view', function(id) {
                 if (id!==self.model.id)
@@ -53,12 +52,12 @@ define(rq, function(PlotView, Spinner, SpinnerConfig){
 
         view: function() {
             Application.EventBus.trigger('firing:view', this.model.id);
-            this.PlotView.view();
+            //this.PlotView.view();
             $(this.el).addClass('active');
         },
 
         close: function() {
-            this.PlotView.close();
+            //this.PlotView.close();
             $(this.el).removeClass('active');
         },
 
