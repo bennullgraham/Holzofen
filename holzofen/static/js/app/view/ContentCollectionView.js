@@ -2,16 +2,16 @@ var rq = [
     'lib/spin',
     'app/SpinnerConfig',
     'app/model/ContentCollection',
-    'app/view/ContentView'
+    'app/view/ContentViewItem'
 ];
-define(rq, function(Spinner, SpinnerConfig, ContentCollection, ContentView){
+define(rq, function(Spinner, SpinnerConfig, ContentCollection, ContentViewItem){
     
     var Contents = new ContentCollection;
 
     return Backbone.View.extend({
 
-        tagName: "ul",
-        className: "contents-list",
+        tagName: "section",
+        id: "contents-list",
         contentViews: [],
 
         initialize: function(options) {
@@ -25,29 +25,29 @@ define(rq, function(Spinner, SpinnerConfig, ContentCollection, ContentView){
 
         render: function() {
             var self = this;
-            if (self.$el)
-                self.$el.empty();
-            
-            if(Contents.length) {
-                _(self.contentViews).each(function(view){
-                    self.$el.append(view.render().el);
-                });
-            }
-            else {
-                var opts = SpinnerConfig['content-collection-view'];
-                new Spinner(opts).spin(self.el);
-            }
+            $(self.el).template('content-collection-view', {}, function() {
+                if(Contents.length) {
+                    _(self.contentViews).each(function(view){
+                        $('ul', self.el).append(view.render().el);
+                    });
+                }
+                else {
+                    if (self.$el) self.$el.empty();
+                    var opts = SpinnerConfig['content-collection-view'];
+                    new Spinner(opts).spin(self.el);
+                }
+            });
             return self;
         },
 
-        // add new view to the array of views we maintain
+        // add new view to the array of views this collection maintains
         add: function(content) {
             var self = this;
-            self.contentViews.push(new ContentView({model: content}));
+            self.contentViews.push(new ContentViewItem({model: content}));
             self.render();
         },
 
-        // remove view from the array of views we maintain
+        // remove view from the array of views this collection maintains
         remove: function(content) {
             var self = this;
             var removable = _(self.contentViews).select(function(v) { return v.model === model; });
@@ -58,7 +58,7 @@ define(rq, function(Spinner, SpinnerConfig, ContentCollection, ContentView){
         reset: function(collection) {
             var self = this;
             self.contentViews = collection.map(function(content){
-                return new ContentView({model: content});
+                return new ContentViewItem({model: content});
             });
             self.render();
         }

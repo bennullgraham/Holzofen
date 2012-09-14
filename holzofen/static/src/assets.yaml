@@ -37,3 +37,4 @@ css_core:
         # application      
          - sass/firing.sass
          - sass/plot.sass
+         - sass/content.sass

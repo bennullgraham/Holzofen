@@ -39,6 +39,5 @@ def content_index():
 @util.jsonify
 def content_view(content_id):
     return {
-        'content': render_template('/content/%s.haml' % content_id),
-        'title': 'Construction'
+        'content': render_template('/content/%s.haml' % content_id)
     }

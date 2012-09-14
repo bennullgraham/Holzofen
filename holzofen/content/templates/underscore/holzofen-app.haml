@@ -3,9 +3,6 @@
         Holzofen
     %nav#header-nav
         %ul
-            %li -> %a.oven href="#" rel="tooltip" title="What's going on here?"
-                %i.icon-fire
-                The Oven
             %li -> %a.import-firings href="#" rel="tooltip" title="Upload a file containing temperature data"
                 %i.icon-upload
                 Import
@@ -25,7 +22,9 @@
             %a.button.primary.import-firings
                 %i.icon-upload
                 Import
-    %ul#firing-list
+    %section#firings-list
+        %h1 << Temperature Records
+        %ul#firing-list
     %div#import-dialog.modal style="display: none"
 %div#content-pane
     <!-- %input#new-firing -->

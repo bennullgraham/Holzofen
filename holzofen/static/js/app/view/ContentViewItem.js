@@ -9,7 +9,7 @@ define(rq, function(Content, Spinner, SpinnerConfig){
 
         tagName: "li",
         events: {
-            'click': 'view'
+            'click'                 : "view"
         },
         viewing: false,
 
@@ -23,7 +23,8 @@ define(rq, function(Content, Spinner, SpinnerConfig){
             var data = self.model.toJSON();
             
             if(typeof data.title !== 'undefined') {
-                self.$el.template('content-view', data);
+                self.$el.template('content-view-item', data);
+                self.delegateEvents();
             }
             else {
                 self.$el.empty();
@@ -39,18 +40,18 @@ define(rq, function(Content, Spinner, SpinnerConfig){
         view: function() {
             var self = this,
                 data = self.model.toJSON(),
-                $el = $('#content-pane');
+                $pane = $('#content-pane');
 
             self.viewing = true;
             self.model.fetch();
 
             if(typeof data.content !== 'undefined') {
-                $el.html(data.content);
+                $pane.html(data.content);
             }
             else {
-                $el.empty();
+                $pane.empty();
                 var opts = SpinnerConfig['content-view'];
-                new Spinner(opts).spin($el);
+                new Spinner(opts).spin($pane);
             }
         },
 

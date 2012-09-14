@@ -46,7 +46,7 @@ define(rq, function(FiringCollection, FiringView, ContentCollectionView) {
                 Firings.bind('all', self.render, self);
                 Firings.fetch();
 
-                $('#content-pane').html(ContentCollectionView.render().el);
+                $('#left-pane').prepend(ContentCollectionView.render().el);
             });
         },
 
