@@ -11,56 +11,38 @@ define(rq, function(FiringCollectionView, ContentCollectionView) {
     var HolzofenView = Backbone.View.extend({
 
         el: $('#HolzofenApp'),
-        
-        events: {
-            'click .import-firings'                 : 'showUpload',
-            'click #plupload-container .upload'     : 'hideUpload'
-        },
 
-        tooltipOpts: {
-            placement: 'bottom'
-        },
+        tooltipOpts: { placement: 'bottom' },
 
         initialize: function() {
             var self = this;
+            self.EventBus = _.clone(Backbone.Events);
+            window.Holzofen = self;
+            self.render();
+        },
 
-            self.createEventBus(self);
 
-            
-
-            $(this.el).template('holzofen-app', {}, function() {
-                self.$no_firings = self.$('#no-firings');
-
-                self.ContentsView = new ContentCollectionView;
-                self.FiringsView = new FiringCollectionView;
+        render: function() {
+            var self = this;
+            self.$el.template('holzofen-app', {}, function() {
                 $('#header-nav a').tooltip(self.tooltipOpts);
-
+                $('#left-pane').empty();
+                self.ContentsView = new ContentCollectionView();
+                self.FiringsView = new FiringCollectionView();
                 $('#left-pane').append(self.ContentsView.render().el);
                 $('#left-pane').append(self.FiringsView.render().el);
             });
         },
 
 
-        createEventBus: function(self) {
-            self.EventBus = {};
-            _.extend(self.EventBus, Backbone.Events);
-            window.Application = self;
-        },
-
-
-        render: function() {
-            // ...
-        },
-
-
-        checkNone: function() {
+        /*checkNone: function() {
             var self = this;
             if (Firings.length === 0) {
                 self.no_firings.show();
             } else {
                 self.no_firings.hide();
             }
-        },
+        },*/
 
         showUpload: function() {
             console.dir('show');

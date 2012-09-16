@@ -10,16 +10,17 @@ define(rq, function(Spinner) {
 
         initialize: function() {
             var self = this;
+            self.delegateEvents();
+            self.collection.bind('reset',  self.reset,  self);
+            self.collection.bind('add',    self.add,    self);
+            self.collection.bind('remove', self.remove, self);
+            self.collection.bind('all',    self.render, self);
             self.collection.fetch();
-            self.collection.bind('reset', self.reset, self);
-            self.collection.bind('add', self.add);
-            self.collection.bind('remove', self.remove);
-            self.collection.bind('all', self.render);
 
             _(['View', 'templatePath', 'spinnerOpts', 'collection']).each(function(v){
                 if (typeof self[v] === 'undefined') {
-                    console.log('AppCollectionView requires self.' + v + ' to be defined');
-                }    
+                    console.log('CollectionView requires self.' + v + ' to be defined');
+                }
             });
 
             // hax initialize "inheritance"
@@ -45,24 +46,25 @@ define(rq, function(Spinner) {
         },
 
         // add new view to the array of views this collection maintains
-        add: function(content) {
+/*        add: function(m) {
             var self = this;
-            self.collectionViews.push(new self.View({model: content}));
+            console.dir(m);
+            self.collectionViews.push(new self.View({model: m}));
             self.render();
         },
 
         // remove view from the array of views this collection maintains
-        remove: function(content) {
+        remove: function(m) {
             var self = this;
-            var removable = _(self.collectionViews).select(function(v) { return v.model === model; });
+            var removable = _(self.collectionViews).select(function(v) { return v.model === m; });
             self.collectionViews = _(self.collectionViews).without(removable);
             self.render();
-        },
+        },*/
 
         reset: function(collection) {
             var self = this;
-            self.collectionViews = collection.map(function(content){
-                return new self.View({model: content});
+            self.collectionViews = collection.map(function(m){
+                return new self.View({model: m});
             });
             self.render();
         }

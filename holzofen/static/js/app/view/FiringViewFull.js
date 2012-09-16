@@ -28,6 +28,13 @@ define(rq, function(Spinner, SpinnerConfig){
             }
         },
 
+        initialize: function() {
+            var self = this;
+            $(window).on("resize.app", _.bind(self.render, self));
+            self.model.bind('change:data', self.render, self);
+            Holzofen.EventBus.on('firing:view', self.view);
+        },
+
         render: function() {
             var self = this;
             var data = self.model.toJSON();
@@ -36,10 +43,10 @@ define(rq, function(Spinner, SpinnerConfig){
             if (self.$el.context.parentElement === null) {
                 return self;
             }
-            if(typeof data['data'] !== 'undefined') {
+            if(typeof data.data !== 'undefined') {
                 self.$el.template('plot-view', {}, function(){
                     var plotPlaceholder = $('.plot-placeholder', self.$el);
-                    $.plot(plotPlaceholder, data['data'], self.plotOpts);
+                    $.plot(plotPlaceholder, data.data, self.plotOpts);
                 });
             }
             else {
@@ -51,15 +58,15 @@ define(rq, function(Spinner, SpinnerConfig){
             return self;
         },
 
-        initialize: function() {
+        view: function(id) {
             var self = this;
-            $(window).on("resize.app", _.bind(this.render, this));
-            self.model.bind('change:data', self.render, self);
-        },
 
-        view: function() {
-            $('#content-pane').html(this.$el);
-            this.render();
+            if (typeof id !== 'undefined' && id !== self.model.id) {
+                return self.close();
+            }
+            
+            $('#content-pane').html(self.$el);
+            return self.render();
         },
 
         close: function() {
