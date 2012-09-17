@@ -14,13 +14,14 @@ define(rq, function(Spinner) {
             self.collection.bind('reset',  self.reset,  self);
             self.collection.bind('add',    self.add,    self);
             self.collection.bind('remove', self.remove, self);
-            self.collection.bind('all',    self.render, self);
 
             _(['View', 'templatePath', 'spinnerOpts', 'collection']).each(function(v){
                 if (typeof self[v] === 'undefined') {
                     throw 'CollectionView requires self.' + v + ' to be defined';
                 }
             });
+
+            self.collection.fetch();
 
             // hax initialize "inheritance"
             if (typeof self.sub_initialize === 'function') {
@@ -31,18 +32,36 @@ define(rq, function(Spinner) {
         render: function() {
             var self = this;
             self.$el.template(self.templatePath, {}, function() {
-                if(self.collection.length) {
-                    _(self.collectionViews).each(function(view){
-                        self.$('ul').append(view.render().el);
-                    });
-                }
-                else {
-                    // if (self.$el) self.$el.empty();
-                    new Spinner(self.spinnerOpts).spin(self.el);
-                    self.collection.fetch();
-                }
+                self.hideNoItems();
+                if(self.collection.length)
+                    self.renderChildViews();
+                else
+                    self.showNoItems();
             });
             return self;
+        },
+
+        renderChildViews: function() {
+            var self = this;
+            _(self.collectionViews).each(function(view){
+                self.$('ul').append(view.render().el);
+            });
+        },
+
+        showNoItems: function() {
+            var self = this;
+            var $el = self.$('.no-items');
+            if ($el.length) {
+                $el.show();
+            }
+        },
+
+        hideNoItems: function() {
+            var self = this;
+            var $el = self.$('.no-items');
+            if ($el.length) {
+                $el.hide();
+            }
         },
 
         // add new view to the array of views this collection maintains
@@ -57,6 +76,7 @@ define(rq, function(Spinner) {
             console.log('got model remove event');
             var self = this;
             var removable = _(self.collectionViews).select(function(v) { return v.model === m; });
+            removable[0].remove();
             self.collectionViews = _(self.collectionViews).without(removable);
             self.render();
         },

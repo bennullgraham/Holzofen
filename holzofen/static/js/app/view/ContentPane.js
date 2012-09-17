@@ -9,7 +9,7 @@ define(rq, function() {
         insert: function(view) {
             var self = this;
 
-            if (self.childView)
+            if (self.childView && typeof self.childView.close === 'function')
                 self.childView.close();
 
             self.childView = view;

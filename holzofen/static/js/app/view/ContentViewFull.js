@@ -27,6 +27,10 @@ define(rq, function(Spinner, SpinnerConfig){
                 new Spinner(opts).spin(self.el);
             }
             return self;
+        },
+
+        close: function() {
+            // ...
         }
     });
 });

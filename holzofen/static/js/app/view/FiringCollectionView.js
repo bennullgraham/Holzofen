@@ -20,7 +20,7 @@ define(rq, function(CollectionView, FiringCollection, FiringViewItem, FiringView
             var self = this;
 
             Holzofen.EventBus.on('firing:uploaded', function(id) {
-                self.collection.create({'id': id});
+                self.collection.fetch();
             });
 
             Holzofen.EventBus.on('firing:view',  function(id) { self.childViewed(id); });

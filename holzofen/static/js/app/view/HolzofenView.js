@@ -44,16 +44,6 @@ define(rq, function(FiringCollectionView, ContentCollectionView, ContentPane) {
             });
         },
 
-
-        /*checkNone: function() {
-            var self = this;
-            if (Firings.length === 0) {
-                self.no_firings.show();
-            } else {
-                self.no_firings.hide();
-            }
-        },*/
-
         showUpload: function() {
             var self = this;
             var dialog = $('#import-dialog');
