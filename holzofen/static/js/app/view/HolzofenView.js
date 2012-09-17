@@ -1,12 +1,13 @@
 rq = [
     'app/view/FiringCollectionView',
     'app/view/ContentCollectionView',
+    'app/view/ContentPane',
     'app/template',
     'lib/plupload',
     'lib/jquery.bootstrap.modal',
     'lib/jquery.bootstrap.tooltip'
 ];
-define(rq, function(FiringCollectionView, ContentCollectionView) {
+define(rq, function(FiringCollectionView, ContentCollectionView, ContentPane) {
 
     var HolzofenView = Backbone.View.extend({
 
@@ -31,6 +32,7 @@ define(rq, function(FiringCollectionView, ContentCollectionView) {
                 self.FiringsView = new FiringCollectionView();
                 $('#left-pane').append(self.ContentsView.render().el);
                 $('#left-pane').append(self.FiringsView.render().el);
+                self.ContentPane = new ContentPane({el: $('#content-pane')});
             });
         },
 
@@ -61,5 +63,5 @@ define(rq, function(FiringCollectionView, ContentCollectionView) {
 
     });
 
-    return new HolzofenView;
+    return new HolzofenView();
 });

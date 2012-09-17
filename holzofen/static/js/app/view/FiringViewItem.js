@@ -7,20 +7,20 @@ define(rq, function(Spinner, SpinnerConfig){
     return Backbone.View.extend({
 
         tagName: "li",
-        className: "firing-list-item",
+        className: "firing-view-item",
+        id: 'arbitrary',
+        viewing: false,
 
         events: {
-            //'click'                 : 'activate',
-            //'click .edit .delete'   : 'remove'
+            'click'                 : 'view',
+            'click .edit .delete'   : 'remove'
         },
 
         initialize: function(options) {
             var self = this;
             
             self.model.bind('change', self.render, self);
-            self.model.bind('destroy', self.deactivate, self);
-
-            Holzofen.EventBus.on('firing:view', self.deactivate);
+            self.model.bind('destroy', self.close, self);
         },
 
         render: function() {
@@ -33,30 +33,30 @@ define(rq, function(Spinner, SpinnerConfig){
                 data.duration = self.model.duration();
                 data.max_temp = self.model.maxTemp();
                 data.data_date_human = date_human.toDateString();
-                self.$el.template('firing-view', data);
+                self.$el.template('firing-view-item', data);
+                self.delegateEvents();
             }
             else {
                 self.$el.empty();
                 var opts = SpinnerConfig['firing-view'];
                 new Spinner(opts).spin(self.el);
             }
-            
-            // self.delegateEvents();
-            // self.$el.on('click', self.activate);
             return self;
         },
 
-        activate: function() {
+        view: function() {
             var self = this;
-            console.dir(self);
-            console.log('activating ' + self.model.id);
-            Holzofen.EventBus.trigger('firing:view', self.model.id);
-            self.$el.addClass('active');
+            if (!self.viewing) {
+                Holzofen.EventBus.trigger('firing:view', self.model.id);
+                self.viewing = true;
+                self.$el.addClass('active');
+            }
         },
 
-        deactivate: function(unless_id) {
+        close: function() {
             var self = this;
-            if (typeof unless_id === 'undefined' || (typeof self.model !== 'undefined' && unless_id == self.model.id)) {
+            if (self.viewing) {
+                self.viewing = false;
                 self.$el.removeClass('active');
             }
         },

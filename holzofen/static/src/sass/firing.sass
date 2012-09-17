@@ -22,7 +22,7 @@ section#firings-list
     margin: 0 $planck
     padding: 0
 
-.firing-list-item
+.firing-view-item
     position: relative
     cursor: pointer
     color: $fg-body
@@ -53,6 +53,7 @@ section#firings-list
         height: $item-height + ($planck * 2) - ($item-padding-v * 2) - 2px /* border */
         background-image: -webkit-linear-gradient($item-bg-light-on 20%, $item-bg-dark-on 80%)
         color: #fff
+        cursor: default
 
     time.date
         font-weight: bold
@@ -82,7 +83,7 @@ section#firings-list
             width: 50px
 
 
-.firing-list-item.active
+.firing-view-item.active
     div.edit
         -webkit-transition: opacity 0.2s
         opacity: 1
@@ -115,7 +116,7 @@ section#firings-list
             font-style: italic
 
 #no-firings
-    @extend .firing-list-item
+    @extend .firing-view-item
     display: none
     width: $leftpanel-width - (2 * $item-padding-h) - ($planck * 2) - 2px /* border */
     margin: 0 0 0 $planck

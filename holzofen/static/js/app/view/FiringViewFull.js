@@ -9,7 +9,7 @@ define(rq, function(Spinner, SpinnerConfig){
     return Backbone.View.extend({
 
         tagName: 'div',
-        className: 'plot-view',
+        className: 'firing-view-full',
         plotOpts: {
             xaxis: {
                 mode: "time",
@@ -32,22 +32,24 @@ define(rq, function(Spinner, SpinnerConfig){
             var self = this;
             $(window).on("resize.app", _.bind(self.render, self));
             self.model.bind('change:data', self.render, self);
-            Holzofen.EventBus.on('firing:view', self.view);
         },
 
         render: function() {
             var self = this;
             var data = self.model.toJSON();
 
-            // don't render if this view is not in the DOM
-            if (self.$el.context.parentElement === null) {
-                return self;
-            }
             if(typeof data.data !== 'undefined') {
-                self.$el.template('plot-view', {}, function(){
-                    var plotPlaceholder = $('.plot-placeholder', self.$el);
-                    $.plot(plotPlaceholder, data.data, self.plotOpts);
-                });
+                if (self.$el.closest('body').length > 0) {
+                    console.log('doing render');
+                    self.$el.template('plot-view', {}, function(){
+                        var placeholder = self.$('.plot-placeholder');
+                        console.dir(placeholder);
+                        $.plot(placeholder, data.data, self.plotOpts);
+                    });
+                }
+                else {
+                    console.log('skipping render, not in DOM?');
+                }
             }
             else {
                 // only load in plot data now, when definitely necessary.
@@ -58,24 +60,11 @@ define(rq, function(Spinner, SpinnerConfig){
             return self;
         },
 
-        view: function(id) {
-            var self = this;
-
-            if (typeof id !== 'undefined' && id !== self.model.id) {
-                return self.close();
-            }
-            
-            $('#content-pane').html(self.$el);
-            return self.render();
-        },
-
-        close: function() {
-            this.$el.detach();
-        },
-
         remove: function() {
+            var self = this;
+            Holzofen.EventBus.trigger('firing:close', self.model.id);
             $(window).off("resize.app");
-            Backbone.View.prototype.remove.call(this);
+            Backbone.View.prototype.remove.call(self);
         }
 
     });
