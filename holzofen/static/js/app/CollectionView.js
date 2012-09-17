@@ -18,7 +18,7 @@ define(rq, function(Spinner) {
 
             _(['View', 'templatePath', 'spinnerOpts', 'collection']).each(function(v){
                 if (typeof self[v] === 'undefined') {
-                    console.log('CollectionView requires self.' + v + ' to be defined');
+                    throw 'CollectionView requires self.' + v + ' to be defined';
                 }
             });
 
@@ -48,7 +48,6 @@ define(rq, function(Spinner) {
         // add new view to the array of views this collection maintains
         add: function(m) {
             var self = this;
-            console.dir(m);
             self.collectionViews.push(new self.View({model: m}));
             self.render();
         },

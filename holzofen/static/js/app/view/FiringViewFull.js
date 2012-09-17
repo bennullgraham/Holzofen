@@ -40,15 +40,12 @@ define(rq, function(Spinner, SpinnerConfig){
 
             if(typeof data.data !== 'undefined') {
                 if (self.$el.closest('body').length > 0) {
-                    console.log('doing render');
                     self.$el.template('plot-view', {}, function(){
                         var placeholder = self.$('.plot-placeholder');
-                        console.dir(placeholder);
                         $.plot(placeholder, data.data, self.plotOpts);
                     });
                 }
                 else {
-                    console.log('skipping render, not in DOM?');
                 }
             }
             else {

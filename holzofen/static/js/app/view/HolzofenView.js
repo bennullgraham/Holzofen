@@ -47,7 +47,6 @@ define(rq, function(FiringCollectionView, ContentCollectionView, ContentPane) {
         },*/
 
         showUpload: function() {
-            console.dir('show');
             var self = this;
             var dialog = $('#import-dialog');
             dialog.template('uploader', {}, function() {
