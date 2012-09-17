@@ -54,6 +54,7 @@ define(rq, function(Spinner) {
 
         // remove view from the array of views this collection maintains
         remove: function(m) {
+            console.log('got model remove event');
             var self = this;
             var removable = _(self.collectionViews).select(function(v) { return v.model === m; });
             self.collectionViews = _(self.collectionViews).without(removable);

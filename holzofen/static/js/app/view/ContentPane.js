@@ -10,7 +10,7 @@ define(rq, function() {
             var self = this;
 
             if (self.childView)
-                self.childView.remove();
+                self.childView.close();
 
             self.childView = view;
             self.$el.html(self.childView.el);
@@ -19,11 +19,11 @@ define(rq, function() {
             return self;
         },
 
-        remove: function() {
+        clear: function() {
             var self = this;
 
             if (self.childView)
-                self.childView.remove();
+                self.childView.close();
             return self;
         }
 

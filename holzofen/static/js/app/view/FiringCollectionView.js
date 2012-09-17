@@ -16,16 +16,10 @@ define(rq, function(CollectionView, FiringCollection, FiringViewItem, FiringView
         View: FiringViewItem,
         spinnerOpts: SpinnerConfig['default'],
 
-        events: {
-            //'click .import-firings'                 : 'showUpload',
-            //'click #plupload-container .upload'     : 'hideUpload'
-        },
-
         sub_initialize: function() {
             var self = this;
 
             Holzofen.EventBus.on('firing:uploaded', function(id) {
-                self.hideUpload();
                 self.collection.create({'id': id});
             });
 
@@ -38,7 +32,7 @@ define(rq, function(CollectionView, FiringCollection, FiringViewItem, FiringView
 
             // close any currently open list-item views
             _(self.collectionViews).each(function(view){
-                if (view.model.id !== id) view.view();
+                if (view.model.id !== id) view.close();
             });
 
             // open big view

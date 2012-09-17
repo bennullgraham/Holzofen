@@ -13,12 +13,20 @@ define(rq, function(FiringCollectionView, ContentCollectionView, ContentPane) {
 
         el: $('#HolzofenApp'),
 
+        events: {
+            'click .import-firings'                 : 'showUpload',
+            'click #plupload-container .upload'     : 'hideUpload'
+        },
+
         tooltipOpts: { placement: 'bottom' },
 
         initialize: function() {
             var self = this;
             self.EventBus = _.clone(Backbone.Events);
             window.Holzofen = self;
+            Holzofen.EventBus.on('firing:uploaded', function(id) {
+                self.hideUpload();
+            });
             self.render();
         },
 

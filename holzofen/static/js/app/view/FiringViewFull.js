@@ -32,6 +32,7 @@ define(rq, function(Spinner, SpinnerConfig){
             var self = this;
             $(window).on("resize.app", _.bind(self.render, self));
             self.model.bind('change:data', self.render, self);
+            self.model.bind('destroy', self.close, self);
         },
 
         render: function() {
@@ -57,9 +58,13 @@ define(rq, function(Spinner, SpinnerConfig){
             return self;
         },
 
+        close: function() {
+            self.$el.empty();
+        },
+
         remove: function() {
             var self = this;
-            Holzofen.EventBus.trigger('firing:close', self.model.id);
+            
             $(window).off("resize.app");
             Backbone.View.prototype.remove.call(self);
         }

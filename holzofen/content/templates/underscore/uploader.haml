@@ -49,7 +49,7 @@
         $('#' + file.id + " b").html("100%");
         if (info.status=200) {
             id = $.parseJSON(info.response)[0];
-            Application.EventBus.trigger('firing:uploaded', id);
+            Holzofen.EventBus.trigger('firing:uploaded', id);
         }
     });
 
@@ -57,7 +57,7 @@
     %h2
         Import Firing Logs
     %p
-        You can select multiple files. See <a href="/docs/" target="_blank">Holzofen API docs</a> for what these should look like.
+        You can select multiple files. See <a href="/docs/" target="_blank">API docs</a> for what these should look like.
     %ul#filelist
     %a.button#select-files href="#"
         %i.icon-folder-open

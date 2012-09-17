@@ -13,7 +13,7 @@ define(rq, function(Spinner, SpinnerConfig){
 
         events: {
             'click'                 : 'view',
-            'click .edit .delete'   : 'remove'
+            'click .edit .delete'   : 'destroy'
         },
 
         initialize: function(options) {
@@ -61,11 +61,10 @@ define(rq, function(Spinner, SpinnerConfig){
             }
         },
 
-        remove: function() {
+        destroy: function() {
             var self = this;
             if (confirm("Delete this firing?")) {
                 self.model.destroy();
-                self.remove();
             }
         }
     });
