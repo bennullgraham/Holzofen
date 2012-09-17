@@ -18,7 +18,7 @@ def init_app(app):
 @api.route('/firings/<ObjectId:firing_id>', methods=('GET',))
 @util.jsonify
 def firing_view(firing_id):
-    return db.firings.find_one({'_id': firing_id})
+    return db.firings.find_one({'_id': firing_id}, fields=('data', 'source', 'data_date'))
 
 
 @api.route('/firings/<ObjectId:firing_id>', methods=('DELETE',))
