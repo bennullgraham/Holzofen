@@ -14,12 +14,14 @@ $item-bg-light-on:      $item-bg-light-hov
 $item-bg-dark-on:       $item-bg-dark-hov
 
 section#firings-list
+    margin: 0 0 0 $planck
+    padding: 0 0 $planck 0
     h1
-        margin: $planck
+        margin-top: 0
 
 #firing-list
     list-style: none
-    margin: 0 $planck
+    margin: 0
     padding: 0
 
 .firing-view-item
@@ -119,7 +121,7 @@ section#firings-list
     @extend .firing-view-item
     display: none
     width: $leftpanel-width - (2 * $item-padding-h) - ($planck * 2) - 2px /* border */
-    margin: 0 0 0 $planck
+    margin: 0
     padding: $planck
     height: auto
     p
