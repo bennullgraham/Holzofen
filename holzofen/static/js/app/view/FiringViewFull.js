@@ -70,7 +70,7 @@ define(rq, function(Spinner, SpinnerConfig){
 
         beginPolling: function() {
             var self = this;
-            self.poll = setInterval(function(){ self.model.fetch(); }, 1000);
+            self.poll = setInterval(function(){ self.model.fetch(); }, 10 * 1000);
         },
 
         endPolling: function() {
