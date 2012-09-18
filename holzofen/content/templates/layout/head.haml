@@ -8,8 +8,16 @@
     <!--[if lt IE 9]>
         %script src="{% assets "js_html5shiv" %}{{ ASSET_URL }}{% endassets %}"
     <![endif]-->
-<!-- %script data-main="{{ url_for('static', filename='js/main.js') }}" src="{% assets "js_require" %}{{ ASSET_URL }}{% endassets %}" -->
-%script src="{% assets "js_app" %}{{ ASSET_URL }}{% endassets %}"
+<!-- %script data-main="{{ url_for('static', filename='js/app.js') }}" src="{% assets "js_require" %}{{ ASSET_URL }}{% endassets %}" -->
+<!-- %script src="{% assets "js_app" %}{{ ASSET_URL }}{% endassets %}" -->
+%script src="{% assets "js_require" %}{{ ASSET_URL }}{% endassets %}"
+%script
+    require.config({
+        paths: {
+            "main": "static/js/app"
+        }
+    });
+    require(["main"]);
 %title
     -block title
         Holzofen
