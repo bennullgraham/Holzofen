@@ -27,12 +27,14 @@ define(rq, function(Spinner, SpinnerConfig){
                 dateFormat: "%s: %y&deg;c"
             }
         },
+        poll: null,
 
         initialize: function() {
             var self = this;
             $(window).on("resize.app", _.bind(self.render, self));
             self.model.on('change:data', self.render, self);
-            self.model.on('destroy', self.remove, self);
+            self.model.on('destroy', self.close, self);
+            self.beginPolling();
         },
 
         render: function() {
@@ -59,14 +61,22 @@ define(rq, function(Spinner, SpinnerConfig){
         },
 
         close: function() {
-            // ...
+            var self = this;
+            $(window).off("resize.app");
+            self.endPolling();
+            self.remove();
         },
 
-        remove: function() {
+        beginPolling: function() {
             var self = this;
-            
-            $(window).off("resize.app");
-            Backbone.View.prototype.remove.call(self);
+            console.log('beginning polling');
+            self.poll = setInterval(function(){ self.model.fetch(); }, 1000);
+        },
+
+        endPolling: function() {
+            var self = this;
+            console.log('ending polling');
+            if (self.poll) clearInterval(self.poll);
         }
 
     });
