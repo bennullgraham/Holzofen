@@ -1,11 +1,12 @@
-rq = [
+define(
+[
     'lib/spin',
     'app/SpinnerConfig',
     'lib/jquery.flot',
     'lib/jquery.flot.time',
     'lib/jquery.flot.tooltip'
-];
-define(rq, function(Spinner, SpinnerConfig){
+],
+function(Spinner, SpinnerConfig){
     return Backbone.View.extend({
 
         tagName: 'div',

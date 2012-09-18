@@ -1,7 +1,8 @@
-var rq = [
-	'app/model/Firing'
-];
-define(rq, function(Firing) {
+define(
+[
+    'app/model/Firing'
+],
+function(Firing) {
     return Backbone.Collection.extend({
 
         model: Firing,

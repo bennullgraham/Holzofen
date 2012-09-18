@@ -1,4 +1,5 @@
-rq = [
+define(
+[
     'app/view/FiringCollectionView',
     'app/view/ContentCollectionView',
     'app/view/ContentPane',
@@ -6,8 +7,8 @@ rq = [
     'lib/plupload',
     'lib/jquery.bootstrap.modal',
     'lib/jquery.bootstrap.tooltip'
-];
-define(rq, function(FiringCollectionView, ContentCollectionView, ContentPane) {
+],
+function(FiringCollectionView, ContentCollectionView, ContentPane) {
 
     var HolzofenView = Backbone.View.extend({
 

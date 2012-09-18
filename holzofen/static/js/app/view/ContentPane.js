@@ -1,6 +1,6 @@
-rq = [
-];
-define(rq, function() {
+define(
+[],
+function() {
 
     return Backbone.View.extend({
 

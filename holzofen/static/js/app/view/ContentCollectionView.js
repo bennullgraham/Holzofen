@@ -1,11 +1,12 @@
-rq = [
+define(
+[
     'app/CollectionView',
     'app/model/ContentCollection',
     'app/view/ContentViewItem',
     'app/view/ContentViewFull',
     'app/SpinnerConfig'
-];
-define(rq, function(CollectionView, ContentCollection, ContentViewItem, ContentViewFull, SpinnerConfig) {
+],
+function(CollectionView, ContentCollection, ContentViewItem, ContentViewFull, SpinnerConfig) {
 
     return CollectionView.extend({
 

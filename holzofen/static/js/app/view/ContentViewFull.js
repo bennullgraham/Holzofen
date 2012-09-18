@@ -1,8 +1,9 @@
-rq = [
+define(
+[
     'lib/spin',
     'app/SpinnerConfig'
-];
-define(rq, function(Spinner, SpinnerConfig){
+],
+function(Spinner, SpinnerConfig){
 
     return Backbone.View.extend({
 

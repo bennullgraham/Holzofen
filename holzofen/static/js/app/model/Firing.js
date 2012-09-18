@@ -1,6 +1,6 @@
-rq = [
-];
-define(function(PlotData){
+define(
+[],
+function(PlotData){
 
     return Backbone.Model.extend({
 

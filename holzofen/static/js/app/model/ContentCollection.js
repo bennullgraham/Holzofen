@@ -1,7 +1,8 @@
-var rq = [
+define(
+[
     'app/model/Content'
-];
-define(rq, function(Content) {
+],
+function(Content) {
     return Backbone.Collection.extend({
 
         model: Content,
