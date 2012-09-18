@@ -62,6 +62,7 @@ define(rq, function(Spinner, SpinnerConfig){
 
         close: function() {
             var self = this;
+            Holzofen.EventBus.trigger('firing:close', self.model.id);
             $(window).off("resize.app");
             self.endPolling();
             self.remove();
@@ -69,13 +70,11 @@ define(rq, function(Spinner, SpinnerConfig){
 
         beginPolling: function() {
             var self = this;
-            console.log('beginning polling');
             self.poll = setInterval(function(){ self.model.fetch(); }, 1000);
         },
 
         endPolling: function() {
             var self = this;
-            console.log('ending polling');
             if (self.poll) clearInterval(self.poll);
         }
 

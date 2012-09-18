@@ -9,7 +9,6 @@ define(rq, function(Spinner, SpinnerConfig){
         tagName: "li",
         className: "firing-view-item",
         id: 'arbitrary',
-        viewing: false,
 
         events: {
             'click'                 : 'view',
@@ -46,19 +45,13 @@ define(rq, function(Spinner, SpinnerConfig){
 
         view: function() {
             var self = this;
-            if (!self.viewing) {
-                Holzofen.EventBus.trigger('firing:view', self.model.id);
-                self.viewing = true;
-                self.$el.addClass('active');
-            }
+            Holzofen.EventBus.trigger('firing:view', self.model.id);
+            self.$el.addClass('active');
         },
 
         close: function() {
             var self = this;
-            if (self.viewing) {
-                self.viewing = false;
-                self.$el.removeClass('active');
-            }
+            self.$el.removeClass('active');
         },
 
         destroy: function(e) {
