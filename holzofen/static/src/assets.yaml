@@ -21,7 +21,7 @@ js_lib:
 
 js_app:
     filters: rjs
-    output: ../js/app-built.js
+    output: ../js/app.js
     contents:
         - ../js/main.js
 
