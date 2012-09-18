@@ -2,7 +2,11 @@ import os
 from flask import Blueprint
 from flask.ext.assets import Environment
 from webassets.loaders import YAMLLoader
+from webassets.filter import register_filter
+from lib import rjsfilter
 
+
+register_filter(rjsfilter.RjsFilter)
 static = Blueprint('static', __name__)
 
 

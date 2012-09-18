@@ -19,6 +19,12 @@ js_lib:
         - js/lib/backbone.js
         - js/lib/backbone-localstorage-min.js
 
+js_app:
+    filters: rjs
+    output: ../js/app-built.js
+    contents:
+        - ../js/main.js
+
 css_core:
     filters: 
         - sass
