@@ -32,7 +32,7 @@ define(rq, function(Spinner, SpinnerConfig){
             var self = this;
             $(window).on("resize.app", _.bind(self.render, self));
             self.model.on('change:data', self.render, self);
-            self.model.on('destroy', self.close, self);
+            self.model.on('destroy', self.remove, self);
         },
 
         render: function() {
@@ -59,8 +59,7 @@ define(rq, function(Spinner, SpinnerConfig){
         },
 
         close: function() {
-            var self = this;
-            self.$el.empty();
+            // ...
         },
 
         remove: function() {

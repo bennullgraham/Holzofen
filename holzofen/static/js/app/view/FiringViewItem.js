@@ -61,8 +61,9 @@ define(rq, function(Spinner, SpinnerConfig){
             }
         },
 
-        destroy: function() {
+        destroy: function(e) {
             var self = this;
+            e.stopPropagation();
             if (confirm("Delete this firing?")) {
                 self.model.destroy();
             }
