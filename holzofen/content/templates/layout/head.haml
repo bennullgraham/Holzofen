@@ -10,11 +10,11 @@
     <![endif]-->
     %script src="{% assets "js_require" %}{{ ASSET_URL }}{% endassets %}"
     %script
-        -if true or config.debug:
-            require.config({paths: { "main": "/static/js/app" }});
-        -else
+        -if config.DEBUG:
+            -assets "js_app"
+                require.config({paths: { "main": "{{ASSET_URL}}" }});
+        -else:
             require.config({paths: { "main": "/static/js/main" }});
-    %script
         require(["main"]);
 %title
     -block title
