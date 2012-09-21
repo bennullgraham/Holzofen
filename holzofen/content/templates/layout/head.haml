@@ -8,14 +8,12 @@
     <!--[if lt IE 9]>
         %script src="{% assets "js_html5shiv" %}{{ ASSET_URL }}{% endassets %}"
     <![endif]-->
-    %script src="{% assets "js_require" %}{{ ASSET_URL }}{% endassets %}"
-    %script
-        -if config.DEBUG:
-            -assets "js_app"
-                require.config({paths: { "main": "{{ASSET_URL}}" }});
-        -else:
-            require.config({paths: { "main": "/static/js/main" }});
-        require(["main"]);
+    -if config.DEBUG and not config.DEBUG_REQUIRE
+        %script data-main="/static/js/main" src="{% assets "js_require" %}{{ ASSET_URL }}{% endassets %}"
+    -else
+        %script data-main="/static/js/app" src="{% assets "js_require" %}{{ ASSET_URL }}{% endassets %}"
+    -assets "js_app"
+        <!-- "{{ASSET_URL}}" -->
 %title
     -block title
         Holzofen

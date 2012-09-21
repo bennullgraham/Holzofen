@@ -1,7 +1,4 @@
-rq = [
-    'lib/jquery.flot',
-]
-define(rq, function() {
+define(['lib/jquery.flot'], function() {
     /*
     Pretty handling of time axes.
 

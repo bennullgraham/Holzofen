@@ -1,6 +1,7 @@
 *.pyc
 holzofen/static/src/.webassets-cache/
 holzofen/static/css/core.css
+holzofen/static/js/app.js
 local-config.py
 docs/_build
 Holzofen.egg-info/
