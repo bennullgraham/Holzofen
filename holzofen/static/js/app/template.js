@@ -30,7 +30,9 @@ define(
     }
 
 /**
- * Fetch all templates from the server so we have them cached and good to go.
+ * Fetch all templates from the server so we have them cached and good to
+ * go. This won't have cached content ready to go for some UI which
+ * renders immediately, but will reduce calls later on.
  *
  */
     (function bootstrap() {
