@@ -7,7 +7,7 @@ function(Content) {
 
         model: Content,
 
-        url: '/content',
+        url: '/content/',
         
         comparator: function(content) {
             return content.get('title');

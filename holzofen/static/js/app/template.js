@@ -13,7 +13,7 @@ define(
             render(self, cache[template_path], data, callback);
             return self;
         }
-        $.get('template/'+template_path, function(template) {
+        $.get('templates/'+template_path, function(template) {
             cache[template_path] = template;
             render(self, template, data, callback);
         });
@@ -28,5 +28,17 @@ define(
         element.html(_.template(template, data));
         callback();
     }
+
+/**
+ * Fetch all templates from the server so we have them cached and good to go.
+ *
+ */
+    (function bootstrap() {
+        $.get('templates/', function(templates) {
+            _(templates).each(function(template, template_path) {
+                cache[template_path] = template;
+            });
+        });
+    })();
 
 });

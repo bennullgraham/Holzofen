@@ -1,3 +1,4 @@
+import os
 from flask import Blueprint, render_template, current_app as app
 from hamlish_jinja import HamlishExtension
 from subprocess import check_output, CalledProcessError
@@ -21,14 +22,28 @@ def index():
     return render_template('index.haml', rev=rev)
 
 
-@content.route('/template/<string:template>')
-def template(template):
+@content.route('/templates/', methods=('GET',))
+@util.jsonify
+def template_index():
+    """Serve a JSON dict of all template names and their contents"""
+    templates = os.listdir('holzofen/content/templates/underscore/')
+    rendered = {}
+    for template in templates:
+        key = template.rsplit('.', 1)[0]
+        rendered[key] = (render_template('/underscore/%s' % template))
+    return rendered
+
+
+@content.route('/templates/<string:template>', methods=('GET',))
+def template_view(template):
+    """Serve a single template"""
     return render_template('/underscore/%s.haml' % template)
 
 
 @content.route("/content/", methods=('GET',))
 @util.jsonify
 def content_index():
+    """Serve a JSON dict of content titles and the ids that can be used to retrieve them"""
     return [
         {'title': 'Construction', 'id': 'construction'},
         {'title': 'Menu',         'id': 'menu'}
@@ -38,6 +53,7 @@ def content_index():
 @content.route("/content/<string:content_id>", methods=('GET',))
 @util.jsonify
 def content_view(content_id):
+    """Serve a content page encoded with JSON"""
     return {
         'content': render_template('/content/%s.haml' % content_id)
     }

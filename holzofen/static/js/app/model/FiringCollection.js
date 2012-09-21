@@ -7,7 +7,7 @@ function(Firing) {
 
         model: Firing,
 
-        url: '/api/1.0/firings',
+        url: '/api/1.0/firings/',
         
         comparator: function(firing) {
             return firing.get('data_date');
