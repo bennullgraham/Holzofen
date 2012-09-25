@@ -1,0 +1,7 @@
+recursive-include holzofen/static *.*
+recursive-include holzofen/content *.haml
+recursive-include docs/_build/html *.*
+prune holzofen/static/src/*
+include README.md
+include requirements.txt
+local-config.py

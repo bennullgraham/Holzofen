@@ -17,6 +17,8 @@ def init_app(app):
     assets = Environment(app)
     assets.versions = 'hash'
     assets.directory = '%s/src' % here
+    if app.debug == False:
+        assets.auto_build = False
 
     # i have no idea why, but an arbitrary
     # second path segment is required here

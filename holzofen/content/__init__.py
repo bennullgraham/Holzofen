@@ -14,11 +14,14 @@ def init_app(app):
 
 @content.route('/')
 def index():
-    try:
-        git_dir = '--git-dir=%s' % app.config['GIT_DIR']
-        rev = check_output(['git', git_dir, 'rev-parse', '--short', 'HEAD'])
-    except CalledProcessError:
-        rev = 'unknown'
+    rev = 'unknown'
+    if 'GIT_REV' in app.config.keys() and app.config['GIT_REV']:
+        rev = app.config['GIT_REV']
+    elif app.debug:
+        try:
+            rev = check_output(['git', 'rev-parse', '--short', 'HEAD'])
+        except CalledProcessError:
+            pass
     return render_template('index.haml', rev=rev)
 
 

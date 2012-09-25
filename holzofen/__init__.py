@@ -8,8 +8,10 @@ app = Flask(__name__)
 # load config
 app = Flask(__name__)
 app.config.from_object('holzofen.default-config')
-if os.path.isfile('local-config.py'):
-    app.config.from_object('local-config')
+if os.path.isfile('holzofen/local-config.py'):
+    app.config.from_object('holzofen.local-config')
+if os.path.isfile('holzofen/build-env.py'):
+    app.config.from_object('holzofen.build-env')
 if os.environ.get('HOLZOFEN_SETTINGS'):
     app.config.from_envvar('HOLZOFEN_SETTINGS')
 

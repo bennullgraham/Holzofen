@@ -7,3 +7,4 @@ docs/_build
 Holzofen.egg-info/
 build/
 dist/
+holzofen/build-env.py
