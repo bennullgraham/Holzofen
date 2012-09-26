@@ -6,13 +6,14 @@ env.user = 'bgraham'
 env.use_ssh_config = True
 env.directory = '/var/www/Holzofen'
 env.static = '/var/www/Holzofen/static'
+env.docs = '/var/www/Holzofen/docs'
 env.activate = 'source /var/www/Holzofen/env/bin/activate'
 
 
 def bootstrap():
+    _bootstrap()
     _install_virtualenv()
     _install_gevent()
-    _bootstrap()
 
 
 def pack():
@@ -50,6 +51,7 @@ def _install():
     with cd('/tmp/Holzofen'):
         run('tar --strip-components=1 -xzf /tmp/Holzofen.tar.gz')
         run('rsync -rav --delete --exclude=\'*.py\' --exclude=\'*.pyc\' --exclude=\'/src\' /tmp/Holzofen/holzofen/static/* %s' % env.static)
+        run('rsync -rav --delete /tmp/Holzofen/docs/.build/html/* %s' % env.docs)
         run('/var/www/Holzofen/env/bin/python setup.py install')
     run('rm -rf /tmp/Holzofen /tmp/Holzofen.tar.gz')
     run('touch /var/www/Holzofen/Holzofen.py')
@@ -69,9 +71,6 @@ def _bootstrap():
     _mkchown('/var/www/Holzofen')
     _mkchown('/var/backups/Holzofen')
 
-    with cd('/var/www/Holzofen'):
-        run('virtualenv --distribute env')
-
 
 def _install_virtualenv():
     distribute_installer = 'http://python-distribute.org/distribute_setup.py'
@@ -79,6 +78,8 @@ def _install_virtualenv():
     for url in [distribute_installer, pip_installer]:
         sudo('curl %s | python' % url)
     sudo('pip install virtualenv virtualenvwrapper')
+    with cd('/var/www/Holzofen'):
+        run('virtualenv --distribute env')
 
 
 def _install_gevent():
