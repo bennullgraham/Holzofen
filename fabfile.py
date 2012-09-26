@@ -4,12 +4,29 @@ from contextlib import contextmanager as _contextmanager
 # the user to use for the remote commands
 env.user = 'bgraham'
 env.use_ssh_config = True
-env.hosts = ['gvm']
 env.directory = '/var/www/Holzofen'
+env.static = '/var/www/Holzofen/static'
 env.activate = 'source /var/www/Holzofen/env/bin/activate'
 
 
-def configure():
+def bootstrap():
+    _install_virtualenv()
+    _install_gevent()
+    _bootstrap()
+
+
+def pack():
+    _configure()
+    _pack()
+
+
+def deploy():
+    _upload()
+    _backup_db()
+    _install()
+
+
+def _configure():
     local('if [ ! -z holzofen/build.env.py ]; then rm holzofen/build-env.py; fi')
 
     # write git revision to config so we can display it without
@@ -17,49 +34,46 @@ def configure():
     local('echo "GIT_REV = \'$(git rev-parse --short HEAD)\'" >> holzofen/build-env.py')
 
 
-def pack():
-    # build docs
+def _pack():
     local('make --directory=docs html')
-
-    # (re)build assets
     local('python manage.py assets_rebuild')
-
-    # create a new source distribution as tarball
     local('python setup.py sdist --formats=gztar', capture=False)
 
 
-def deploy():
-    # figure out the release name and version
+def _upload():
     dist = local('python setup.py --fullname', capture=True).strip()
-    # upload the source tarball to the temporary folder on the server
     put('dist/%s.tar.gz' % dist, '/tmp/Holzofen.tar.gz')
-    # create a place where we can unzip the tarball, then enter that
-    # directory and unzip it
     run('mkdir -p /tmp/Holzofen && rm -rf /tmp/Holzofen/*')
-    # with cd('/var/www/Holzofen'):
-        # backup the database
-        # run('mongodump -d holzofen -c firings -o- | gzip -c > mongo.dump.gz')
+
+
+def _install():
     with cd('/tmp/Holzofen'):
         run('tar --strip-components=1 -xzf /tmp/Holzofen.tar.gz')
-        # now setup the package with our virtual environment's python
-        # interpreter
+        run('rsync -rav --delete --exclude=\'*.py\' --exclude=\'*.pyc\' --exclude=\'/src\' /tmp/Holzofen/holzofen/static/* %s' % env.static)
         run('/var/www/Holzofen/env/bin/python setup.py install')
-    # now that all is set up, delete the folder again
     run('rm -rf /tmp/Holzofen /tmp/Holzofen.tar.gz')
-    # touch the .wsgi file to trigger a reload of the application
     run('touch /var/www/Holzofen/Holzofen.py')
 
 
-def bootstrap():
-    install_virtualenv()
-    sudo('mkdir -p /var/www/Holzofen')
-    sudo('chown %s:%s /var/www/Holzofen' % (env.user, env.user))
+def _backup_db():
+    import datetime
+    import re
+    with cd('/var/backups/Holzofen'):
+        run('find -mtime +365 -exec rm {} \\+')
+        d = str(datetime.datetime.utcnow())
+        date_slug = re.sub('[^0-9]', '_', d)
+        run('mongodump -d holzofen -c firings -o- | gzip -c > %s_mongo.dump.gz' % date_slug)
+
+
+def _bootstrap():
+    _mkchown('/var/www/Holzofen')
+    _mkchown('/var/backups/Holzofen')
 
     with cd('/var/www/Holzofen'):
         run('virtualenv --distribute env')
 
 
-def install_virtualenv():
+def _install_virtualenv():
     distribute_installer = 'http://python-distribute.org/distribute_setup.py'
     pip_installer = 'https://raw.github.com/pypa/pip/master/contrib/get-pip.py'
     for url in [distribute_installer, pip_installer]:
@@ -67,7 +81,7 @@ def install_virtualenv():
     sudo('pip install virtualenv virtualenvwrapper')
 
 
-def install_gevent():
+def _install_gevent():
     sudo('aptitude install -y build-essential libevent-dev python-dev')
     with virtualenv():
         run('pip install gevent')
@@ -78,3 +92,8 @@ def virtualenv():
     with cd(env.directory):
         with prefix(env.activate):
             yield
+
+
+def _mkchown(path):
+    sudo('mkdir -p %s' % path)
+    sudo('chown %s:%s %s' % (env.user, env.user, path))
