@@ -1,4 +1,3 @@
-import os
 from flask import Flask
 from flask.ext.pymongo import BSONObjectIdConverter
 from holzofen import static, api, content
@@ -7,13 +6,13 @@ app = Flask(__name__)
 
 # load config
 app = Flask(__name__)
-app.config.from_object('holzofen.default-config')
-if os.path.isfile('holzofen/local-config.py'):
+try:
+    app.config.from_object('holzofen.default-config')
     app.config.from_object('holzofen.local-config')
-if os.path.isfile('holzofen/build-env.py'):
     app.config.from_object('holzofen.build-env')
-if os.environ.get('HOLZOFEN_SETTINGS'):
     app.config.from_envvar('HOLZOFEN_SETTINGS')
+except:
+    pass
 
 # hax
 app.url_map.converters['ObjectId'] = BSONObjectIdConverter
