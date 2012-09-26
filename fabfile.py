@@ -14,6 +14,7 @@ def bootstrap():
     _bootstrap()
     _install_virtualenv()
     _install_gevent()
+    _install_mongo()
 
 
 def pack():
@@ -80,6 +81,11 @@ def _install_virtualenv():
     sudo('pip install virtualenv virtualenvwrapper')
     with cd('/var/www/Holzofen'):
         run('virtualenv --distribute env')
+
+
+def _install_mongo():
+    sudo('echo "deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen" > /etc/apt/sources.list.d/10gen.list')
+    sudo('apt-get update && apt-get install mongodb-10gen')
 
 
 def _install_gevent():
