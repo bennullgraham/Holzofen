@@ -29,7 +29,7 @@ def deploy():
 
 
 def _configure():
-    local('if [ ! -z holzofen/build.env.py ]; then rm holzofen/build-env.py; fi')
+    local('if [ -f holzofen/build.env.py ]; then rm holzofen/build-env.py; fi')
 
     # write git revision to config so we can display it without
     # installing git on production machine
